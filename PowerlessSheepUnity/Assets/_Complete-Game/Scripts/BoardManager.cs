@@ -65,9 +65,33 @@ namespace Completed
 		{
 			//Instantiate Board and set boardHolder to its transform.
 			boardHolder = new GameObject ("Board").transform;
-			
+
+			int[,] boardArray = {{1,1,1,1,1,1,1,1,1,1},
+								{1,0,0,0,1,0,0,0,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,1,0,1,1,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,0,0,1,0,0,1},
+								{1,1,1,1,1,1,1,1,1,1}};
+
+			for(int i = -1; i < boardArray.GetLength(0)-1; i++) {
+				for (int j = -1; j < boardArray.GetLength(1)-1; j++) {
+					if (boardArray[i+1,j+1] == 0) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, boardArray.GetLength(0)-3-i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					} else if(boardArray[i+1,j+1] == 1) {
+						GameObject toInstantiate = outerWallTiles[Random.Range (0,outerWallTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, boardArray.GetLength(0)-3-i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					}
+				}
+			}
 			//Loop along x axis, starting from -1 (to fill corner) with floor or outerwall edge tiles.
-			for(int x = -1; x < columns + 1; x++)
+			/*for(int x = -1; x < columns + 1; x++)
 			{
 				//Loop along y axis, starting from -1 to place floor or outerwall tiles.
 				for(int y = -1; y < rows + 1; y++)
@@ -86,7 +110,7 @@ namespace Completed
 					//Set the parent of our newly instantiated object instance to boardHolder, this is just organizational to avoid cluttering hierarchy.
 					instance.transform.SetParent (boardHolder);
 				}
-			}
+			}*/
 		}
 		
 		
@@ -111,7 +135,7 @@ namespace Completed
 		void LayoutObjectAtRandom (GameObject[] tileArray, int minimum, int maximum)
 		{
 			//Choose a random number of objects to instantiate within the minimum and maximum limits
-			int objectCount = Random.Range (minimum, maximum+1);
+			int objectCount = 0;//Random.Range (minimum, maximum+1);
 			
 			//Instantiate objects until the randomly chosen limit objectCount is reached
 			for(int i = 0; i < objectCount; i++)
