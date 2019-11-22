@@ -84,7 +84,15 @@ namespace Completed
 			levelText = GameObject.Find("LevelText").GetComponent<Text>();
 			
 			//Set the text of levelText to the string "Day" and append the current level number.
-			levelText.text = "Day " + level;
+			switch (level)
+			{
+				case 1: levelText.text = "You were used to be a famous superhero.\n But now you are a sheep. \n Try to move."; break;
+				case 2: levelText.text = "Great, you learned to eat. "; break;
+				case 3: levelText.text = "Congratulations. \n You got all your superpowers back!\n But you are still a sheep....\nThe strange thing is: You dont care!\n Eating grass is great!"; 
+						Win();
+						return;
+				default: levelText.text = "Day " + level; break;
+			}
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
 			levelImage.SetActive(true);
@@ -145,6 +153,12 @@ namespace Completed
 			enabled = false;
 		}
 		
+		public void Win()
+		{
+			levelImage.SetActive(true);
+			enabled = false;
+		}
+
 		//Coroutine to move enemies in sequence.
 		IEnumerator MoveEnemies()
 		{
