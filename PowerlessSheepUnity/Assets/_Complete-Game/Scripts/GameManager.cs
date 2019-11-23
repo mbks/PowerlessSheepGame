@@ -29,6 +29,7 @@ namespace Completed
 		//Awake is always called before any Start functions
 		void Awake()
 		{
+			player = GameObject.Find("Player").GetComponent<Player>();
             //Check if instance already exists
             if (instance == null)
 
