@@ -58,6 +58,9 @@ namespace Completed
 				Enemy hitEnemy = hit.transform.GetComponent<Enemy>();
 				if (hitEnemy != null)
 					hitEnemy.Kill();
+				Ice hitIce = hit.transform.GetComponent<Ice>();
+				if (hitIce != null)
+					hitIce.DamageWall(3);
 			}
 			
 		}
