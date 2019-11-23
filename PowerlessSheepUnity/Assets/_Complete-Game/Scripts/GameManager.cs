@@ -200,5 +200,19 @@ namespace Completed
 			//Enemies are done moving, set enemiesMoving to false.
 			enemiesMoving = false;
 		}
+
+		public void restartLevel()
+		{
+			print("restart");
+			//instance.InitGame();
+		}
+
+		public void goBackLevel()
+		{
+			print("go back");
+			//level--;
+			//instance.InitGame();
+		}
+
 	}
 }
