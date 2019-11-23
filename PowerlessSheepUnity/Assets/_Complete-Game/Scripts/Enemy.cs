@@ -36,7 +36,7 @@ namespace Completed
 
 		//Override the AttemptMove function of MovingObject to include functionality needed for Enemy to skip turns.
 		//See comments in MovingObject for more on how base AttemptMove function works.
-		protected override void AttemptMove <T> (int xDir, int yDir)
+		public override void AttemptMove <T> (int xDir, int yDir)
 		{
 			//Check if skipMove is true, if so set it to false and skip this turn.
 			if(skipMove)
