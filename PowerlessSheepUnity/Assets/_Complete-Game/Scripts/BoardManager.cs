@@ -94,7 +94,7 @@ namespace Completed
 								{1,0,1,0,1,0,1,0,0,1},
 								{1,0,1,0,1,0,1,0,0,1},
 								{1,0,1,0,1,0,1,0,0,1},
-								{1,0,1,0,0,0,1,0,0,1},
+								{1,0,1,0,0,0,1,0,-1,1},
 								{1,1,1,1,1,1,1,1,1,1}};
 
 			boardArray = flipArray(boardArray);
@@ -115,6 +115,12 @@ namespace Completed
 						instance.transform.SetParent (boardHolder);
 						toInstantiate = foodTiles[0];
 						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					} else if(boardArray[i+1,j+1] == -1) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						instance = Instantiate (exit, new Vector3 (j, i, 0f), Quaternion.identity);
 						instance.transform.SetParent (boardHolder);
 					}
 				}
@@ -210,7 +216,7 @@ namespace Completed
 			//LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
 			
 			//Instantiate the exit tile in the upper right hand corner of our game board
-			Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+			//Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
 		}
 	}
 }
