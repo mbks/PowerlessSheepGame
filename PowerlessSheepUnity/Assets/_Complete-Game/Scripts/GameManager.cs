@@ -153,6 +153,12 @@ namespace Completed
 			enemies.Add(script);
 		}
 
+		public void RemoveEnemyFromList(Enemy script)
+		{
+			//Add Enemy to List enemies.
+			enemies.Remove(script);
+		}
+
 
 		//GameOver is called when the player reaches 0 food points
 		public void GameOver()
@@ -193,7 +199,8 @@ namespace Completed
 			for (int i = 0; i < enemies.Count; i++)
 			{
 				//Call the MoveEnemy function of Enemy at index i in the enemies List.
-				enemies[i].MoveEnemy ();
+				if (enemies[i] != null)
+					enemies[i].MoveEnemy ();
 
 				//Wait for Enemy's moveTime before moving next Enemy,
 				yield return new WaitForSeconds(enemies[i].moveTime);

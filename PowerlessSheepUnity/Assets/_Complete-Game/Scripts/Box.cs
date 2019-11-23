@@ -24,6 +24,13 @@ namespace Completed
 			base.AttemptMove <T> (xDir, yDir);
 		}
 
+		protected override bool Move(int xDir, int yDir, out RaycastHit2D hit) {
+			bool moved = base.Move(xDir, yDir, out hit);
+			if (moved)
+				GameManager.instance.player.ForceMove<Wall>(xDir, yDir);
+			return moved;
+		}
+
 
 		//MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
 

@@ -18,8 +18,14 @@ namespace Completed
 		public AudioClip drinkSound2;				//2 of 2 Audio clips to play when player collects a soda object.
 		public AudioClip gameOverSound;				//Audio clip to play when player dies.
 
+		public GameObject Laser;
+
+		private GameObject instanceLaser;
+
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int ALIVE = 1;
+		private bool hasLaser =  true;
+		private int dir = 0;
 #if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
         private Vector2 touchOrigin = -Vector2.one;	//Used to store location of screen touch origin for mobile controls.
 #endif
@@ -43,7 +49,6 @@ namespace Completed
 
 			int horizontal = 0;  	//Used to store the horizontal move direction.
 			int vertical = 0;		//Used to store the vertical move direction.
-
 			//Check if we are running either in the Unity editor or in a standalone build.
 #if UNITY_STANDALONE || UNITY_WEBPLAYER
 
@@ -105,7 +110,26 @@ namespace Completed
 			{
 				//Call AttemptMove passing in the generic parameter Wall, since that is what Player may interact with if they encounter one (by attacking it)
 				//Pass in horizontal and vertical as parameters to specify the direction to move Player in.
+				if (horizontal == 1)
+					dir = 0;
+				if (horizontal == -1)
+					dir = 2;
+				if (vertical == 1)
+					dir = 3;
+				if (vertical == -1)
+					dir = 1;
 				AttemptMove<Wall> (horizontal, vertical);
+			}
+			if (hasLaser)
+			{
+				if ((Input.GetButton("Fire1")))
+				{
+					if (instanceLaser == null) {
+						instanceLaser = Instantiate (Laser, new Vector3 (0f, 0f, 0f), Quaternion.identity);
+						instanceLaser.GetComponent<Laser>().AttemptMove<Enemy>(dir, 0);
+						Destroy(instanceLaser, 0.3f);
+					}
+				}
 			}
 		}
 
@@ -114,17 +138,9 @@ namespace Completed
 		public override void AttemptMove <T> (int xDir, int yDir)
 		{
 			//Call the AttemptMove method of the base class, passing in the component T (in this case Wall) and x and y direction to move.
-			base.AttemptMove <T> (xDir, yDir);
-			
-			int dir = 0;
-			if (xDir == 1)
-				dir = 0;
-			if (xDir == -1)
-				dir = 2;
-			if (yDir == 1)
-				dir = 3;
-			if (yDir == -1)
-				dir = 1;
+			//base.AttemptMove <T> (xDir, yDir);
+			base.AttemptMove<T>(xDir, yDir);
+
 			animator.SetInteger("direction", dir);
 
 			//Hit allows us to reference the result of the Linecast done in Move.
