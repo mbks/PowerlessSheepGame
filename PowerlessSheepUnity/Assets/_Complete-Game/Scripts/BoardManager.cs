@@ -81,6 +81,7 @@ namespace Completed
 			boardHolder = new GameObject ("Board").transform;
 
 			/**
+			-1 = exit
 			0 = ground
 			1 = wall
 			2 = grass
