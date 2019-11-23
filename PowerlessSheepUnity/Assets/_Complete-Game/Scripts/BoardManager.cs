@@ -80,8 +80,14 @@ namespace Completed
 			//Instantiate Board and set boardHolder to its transform.
 			boardHolder = new GameObject ("Board").transform;
 
+			/**
+			0 = ground
+			1 = wall
+			2 = grass
+			**/
+
 			boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
-								{1,0,0,0,1,0,0,0,0,1},
+								{1,2,0,0,1,0,0,0,0,1},
 								{1,0,1,0,1,0,1,0,0,1},
 								{1,0,1,0,1,0,1,1,0,1},
 								{1,0,1,0,1,0,1,0,0,1},
@@ -102,6 +108,13 @@ namespace Completed
 					} else if(boardArray[i+1,j+1] == 1) {
 						GameObject toInstantiate = outerWallTiles[Random.Range (0,outerWallTiles.Length)];
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					} else if(boardArray[i+1,j+1] == 2) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						toInstantiate = foodTiles[0];
+						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					}
 				}
@@ -160,7 +173,7 @@ namespace Completed
 				Vector3 randomPosition = RandomPosition();
 				int rand_x = 0;
 				int rand_y = 0;
-				while (boardArray[rand_x,rand_y] == 1) {
+				while (boardArray[rand_y,rand_x] == 1) {
 					rand_x = Random.Range (0, boardArray.GetLength(0));
 					rand_y = Random.Range (0, boardArray.GetLength(1));
 				}
@@ -188,7 +201,7 @@ namespace Completed
 			//LayoutObjectAtRandom (wallTiles, wallCount.minimum, wallCount.maximum);
 			
 			//Instantiate a random number of food tiles based on minimum and maximum, at randomized positions.
-			LayoutObjectAtRandom (foodTiles, foodCount.minimum, foodCount.maximum);
+			//LayoutObjectAtRandom (foodTiles, foodCount.minimum, foodCount.maximum);
 			
 			//Determine number of enemies based on current level number, based on a logarithmic progression
 			int enemyCount = (int)Mathf.Log(level, 2f);
