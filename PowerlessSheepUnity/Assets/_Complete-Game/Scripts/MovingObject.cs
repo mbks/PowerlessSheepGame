@@ -31,7 +31,7 @@ namespace Completed
 
 		//Move returns true if it is able to move and false if not.
 		//Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
-		protected bool Move (int xDir, int yDir, out RaycastHit2D hit)
+		protected virtual bool Move (int xDir, int yDir, out RaycastHit2D hit)
 		{
 			//Store start position to move from, based on objects current transform position.
 			Vector2 start = transform.position;
@@ -53,7 +53,7 @@ namespace Completed
 			{
 				//If nothing was hit, start SmoothMovement co-routine passing in the Vector2 end as destination
 				StartCoroutine (SmoothMovement (end));
-				GameManager.instance.player.ForceMove<Wall>(xDir, yDir);
+			
 
 				//Return true to say that Move was successful
 				return true;
@@ -100,7 +100,6 @@ namespace Completed
 			//Set canMove to true if Move was successful, false if failed.
 			bool canMove = Move (xDir, yDir, out hit);
 
-			print(hit);
 
 			//Check if nothing was hit by linecast
 			if(hit.transform == null)

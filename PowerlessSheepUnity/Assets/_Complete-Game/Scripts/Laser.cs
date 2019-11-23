@@ -54,9 +54,12 @@ namespace Completed
 			//Re-enable boxCollider after linecast
 			gameObject.GetComponent<BoxCollider2D>().enabled = true;
 			GameManager.instance.player.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-			Enemy hitEnemy = hit.transform.GetComponent<Enemy>();
-			if (hitEnemy != null)
-				hitEnemy.Kill();
+			if (hit.transform != null) {
+				Enemy hitEnemy = hit.transform.GetComponent<Enemy>();
+				if (hitEnemy != null)
+					hitEnemy.Kill();
+			}
+			
 		}
 
 		//OnCantMove is called if Enemy attempts to move into a space occupied by a Player, it overrides the OnCantMove function of MovingObject

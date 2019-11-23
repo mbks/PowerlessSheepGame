@@ -128,7 +128,6 @@ namespace Completed
 				{
 					if (instanceLaser == null) {
 						instanceLaser = Instantiate (Laser, new Vector3 (0f, 0f, 0f), Quaternion.identity);
-						instanceLaser.transform.Rotate(Vector3.forward * -90);
 						instanceLaser.GetComponent<Laser>().AttemptMove<Enemy>(dir, 0);
 						Destroy(instanceLaser, 0.3f);
 					}
@@ -141,7 +140,7 @@ namespace Completed
 		public override void AttemptMove <T> (int xDir, int yDir)
 		{
 			//Call the AttemptMove method of the base class, passing in the component T (in this case Wall) and x and y direction to move.
-			base.AttemptMove <T> (xDir, yDir);
+			//base.AttemptMove <T> (xDir, yDir);
 
 			animator.SetInteger("direction", dir);
 
