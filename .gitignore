@@ -13,3 +13,8 @@ export_presets.cfg
 .mono/
 
 # End of https://www.gitignore.io/api/godot
+
+# Generated textures
+
+Assets/Zaun/Zaun????64x64.png
+Assets/*64x64.png

@@ -37,8 +37,6 @@ namespace Completed
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
 
-			GameManager.instance.player = this;
-
 			//Call the Start function of the MovingObject base class.
 			base.Start ();
 		}

@@ -81,6 +81,7 @@ namespace Completed
 			boardHolder = new GameObject ("Board").transform;
 
 			/**
+			-2 = start
 			-1 = exit
 			0 = ground
 			1 = wall
@@ -96,11 +97,41 @@ namespace Completed
 								{1,0,2,2,2,2,2,2,-1,1},
 								{1,1,1,1,1,1,1,1,1,1}};
 							break;
-			  case 2: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
-								{1,0,0,0,0,0,0,0,0,1},
-								{1,0,0,0,0,0,0,0,0,1},
-								{1,0,2,2,2,2,2,2,-1,1},
-								{1,1,1,1,1,1,1,1,1,1}};
+
+
+				case 2: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,0,0,1,0,0,0,-1,1},
+												{1,0,0,0,3,0,0,0,0,1},
+												{1,0,0,0,1,0,0,0,0,1},
+												{1,0,0,0,3,0,0,0,0,1},
+												{1,0,0,0,1,0,0,0,0,1},
+												{1,0,0,0,3,0,0,0,0,1},
+												{1,0,0,0,1,0,0,0,0,1},
+												{1,-2,0,0,3,0,0,0,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
+							break;
+
+				case 3: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,1,0,0,1,0,0,-1,1},
+												{1,0,3,0,0,1,0,1,0,1},
+												{1,3,1,1,0,1,0,0,1,1},
+												{1,0,0,1,0,0,3,3,0,1},
+												{1,0,0,1,0,1,1,0,0,1},
+												{1,1,3,1,0,0,0,0,0,1},
+												{1,0,0,1,0,1,0,0,0,1},
+												{1,-2,0,1,0,1,0,0,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
+							break;
+				case 4: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,0,0,3,3,0,0,-1,1},
+												{1,0,3,0,3,0,0,0,0,1},
+												{1,3,0,3,3,3,0,0,0,1},
+												{1,0,3,3,0,3,3,0,0,1},
+												{1,3,3,0,3,0,0,0,0,1},
+												{1,0,3,3,0,0,0,0,0,1},
+												{1,0,0,3,3,0,0,0,0,1},
+												{1,-2,0,3,0,3,0,0,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
 							break;
 
 				default: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
@@ -125,7 +156,8 @@ namespace Completed
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == 1) {
-						GameObject toInstantiate = outerWallTiles[Random.Range (0,outerWallTiles.Length)];
+						var wallAdjacency = getWallAdjacency(new BoardArray(boardArray), i + 1, j + 1);
+						GameObject toInstantiate = outerWallTiles[wallAdjacency.toIndex()];
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == 2) {
@@ -133,6 +165,13 @@ namespace Completed
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 						toInstantiate = foodTiles[0];
+						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					}else if(boardArray[i+1,j+1] == 3) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						toInstantiate = wallTiles[0];
 						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == 4) {
@@ -148,6 +187,11 @@ namespace Completed
 						instance.transform.SetParent (boardHolder);
 						instance = Instantiate (exit, new Vector3 (j, i, 0f), Quaternion.identity);
 						instance.transform.SetParent (boardHolder);
+					} else if(boardArray[i+1,j+1] == -2) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						GameManager.instance.player.gameObject.transform.position = new Vector3(j, i, 0);
 					}
 				}
 			}
@@ -174,7 +218,20 @@ namespace Completed
 			}*/
 		}
 
+		WallAdjacency getWallAdjacency(BoardArray boardArray, int x, int y) {
+			var tile = boardArray.get(x, y);
+			if(tile == null) {
+				return null;
+			}
+			var left = boardArray.get(x - 1, y) == 1;
+			var right = boardArray.get(x + 1, y) == 1;
+			var bottom = boardArray.get(x, y - 1) == 1;
+			var top = boardArray.get(x, y + 1) == 1;
+			return new WallAdjacency { left = left, right = right, bottom = bottom, top = top };
+		}
 
+
+		
 		//RandomPosition returns a random position from our list gridPositions.
 		Vector3 RandomPosition ()
 		{
@@ -223,6 +280,7 @@ namespace Completed
 		//SetupScene initializes our level and calls the previous functions to lay out the game board
 		public void SetupScene (int level)
 		{
+			GameManager.instance.player = GameObject.Find("Player").GetComponent<Player>();
 			//Creates the outer walls and floor.
 			BoardSetup (level);
 
@@ -243,6 +301,48 @@ namespace Completed
 
 			//Instantiate the exit tile in the upper right hand corner of our game board
 			//Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+		}
+	}
+
+	class BoardArray {
+		public BoardArray(int[,] array2d) {
+			this.array2d = array2d;
+		}
+
+		public int? get(int x, int y) {
+			if(!(0 <= x && x < this.width && 0 <= y && y < this.height)) {
+				return null;
+			} else {
+				return this.array2d[x,y];
+			}
+		}
+
+		public int width {
+			get {
+				return this.array2d.GetLength(0);
+			}
+		}
+
+		public int height {
+			get {
+				return this.array2d.GetLength(1);
+			}
+		}
+
+		private int[,] array2d;
+	}
+
+	class WallAdjacency {
+		public bool left;
+		public bool right;
+		public bool top;
+		public bool bottom;
+
+		public int toIndex() {
+			return (this.bottom ? 8 : 0)
+				+ (this.top ? 4 : 0)
+				+ (this.right ? 2 : 0)
+				+ (this.left ? 1 : 0);
 		}
 	}
 }

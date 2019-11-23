@@ -9,7 +9,7 @@ namespace Completed
 
 	public class GameManager : MonoBehaviour
 	{
-		public float levelStartDelay = 2f;						//Time to wait before starting level, in seconds.
+		public float levelStartDelay = 5f;						//Time to wait before starting level, in seconds.
 		public float turnDelay = 0.1f;							//Delay between each Player turn.
 		//public int playerFoodPoints = 100;						//Starting value for Player food points.
 		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
@@ -86,19 +86,23 @@ namespace Completed
 			//Set the text of levelText to the string "Day" and append the current level number.
 			switch (level)
 			{
-				case 1: levelText.text = "You used to be a famous superhero with lasers and stuff.\n  Your archenemy 'The Shepherd' started transforming all the people into sheep, so you investigated.\n Unfortuately you now became a sheep too and lost all your superpowers. "; break;
+				case 1: levelText.text = "You used to be a famous superhero \n with lasers and stuff.\n  Your archenemy 'The Shepherd' started \n transforming all the people into sheep,\n so you investigated.\n Unfortuately you now became a sheep too ...\n ...and lost all your superpowers. "; break;
 				//level with eating grass, unpushable block?
-				case 2: levelText.text = "Great, you learned to eat. You're stronger now."; break;
+				case 2: levelText.text = "Great, you ate a lot. You feel stronger now."; break;
 				//level with pushing stuff (easy pushing level) //one enemy to avoid
-				case 3: levelText.text = "Nice. Want a challenge now?"; break;
+				case 3: levelText.text = "Nice! Want a challenge now?"; break;
+				// second push level
+				case 4: levelText.text = "One more to go."; break;
 				//level with pushing stuff (complex pushing level) //some enemies to avoid
-				case 4: levelText.text = "You proved to be smart. Your eyes start to burn."; break;
+				case 5: levelText.text = "You proved to be smart.\n Your eyes start to burn."; break;
 				//melt ice-block
-				case 5: levelText.text = "Do you think you can shoot on other things too?"; break;
+				case 6: levelText.text = "Do you think you can shoot on other things too?"; break;
 				//hard enemy-fighting-level
-				case 6: levelText.text = "You see 'The Shephard' now. You don't like him and you feel strong. "; break;
+				case 7: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much saver now, and somehow lightweighted..."; break;
+				//introduction in walking over water
+				case 8: levelText.text = "Didn't you thought you were save? \n You must have been wrong there. \n You see 'The Shephard' now.\n You don't like him and you feel strong. "; break;
 				//Bossfight. Shoot at Shephard with your eyes
-				case 7: levelText.text = "Congratulations. \n You got all your superpowers back and got revenge on 'The Shephard'!\n But you are still a sheep....\nThe strange thing is: You dont care!\n Eating grass is great!";
+				case 9: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
 						Win();
 						return;
 				default: levelText.text = "Day " + level; break;
@@ -207,5 +211,21 @@ namespace Completed
 			//Enemies are done moving, set enemiesMoving to false.
 			enemiesMoving = false;
 		}
+		public void restartLevel()
+		{
+			print("restart");
+			print(instance.level);
+			GameObject.Destroy(GameObject.Find("Board"));
+			instance.boardScript.SetupScene(instance.level);
+		}
+
+		public void goBackLevel()
+		{
+			print("go back");
+			instance.level--;
+			GameObject.Destroy(GameObject.Find("Board"));
+			instance.boardScript.SetupScene(instance.level);
+		}
+
 	}
 }
