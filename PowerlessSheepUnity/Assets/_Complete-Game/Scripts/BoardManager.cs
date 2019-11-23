@@ -39,6 +39,8 @@ namespace Completed
 		
 		private Transform boardHolder;									//A variable to store a reference to the transform of our Board object.
 		private List <Vector3> gridPositions = new List <Vector3> ();	//A list of possible locations to place tiles.
+
+		private int[,] boardArray;
 		
 		
 		//Clears our list gridPositions and prepares it to generate a new board.
@@ -61,13 +63,64 @@ namespace Completed
 		
 		
 		//Sets up the outer walls and floor (background) of the game board.
+
+		int[,] flipArray(int[,] inputarr) {
+			int[,] flipped = (int[,])inputarr.Clone();
+
+			for (int i = 0; i < inputarr.GetLength(0); i++) {
+				for (int j = 0; j < inputarr.GetLength(1); j++) {
+					flipped[i,j] = inputarr[inputarr.GetLength(0)-1-i, j];
+				}
+			}
+			return flipped;
+		}
+
 		void BoardSetup ()
 		{
 			//Instantiate Board and set boardHolder to its transform.
 			boardHolder = new GameObject ("Board").transform;
-			
+
+			/**
+			0 = ground
+			1 = wall
+			2 = grass
+			**/
+
+			boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+								{1,2,0,0,1,0,0,0,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,1,0,1,1,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,1,0,1,0,0,1},
+								{1,0,1,0,0,0,1,0,0,1},
+								{1,1,1,1,1,1,1,1,1,1}};
+
+			boardArray = flipArray(boardArray);
+
+			for(int i = -1; i < boardArray.GetLength(0)-1; i++) {
+				for (int j = -1; j < boardArray.GetLength(1)-1; j++) {
+					if (boardArray[i+1,j+1] == 0) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					} else if(boardArray[i+1,j+1] == 1) {
+						GameObject toInstantiate = outerWallTiles[Random.Range (0,outerWallTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					} else if(boardArray[i+1,j+1] == 2) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						toInstantiate = foodTiles[0];
+						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					}
+				}
+			}
 			//Loop along x axis, starting from -1 (to fill corner) with floor or outerwall edge tiles.
-			for(int x = -1; x < columns + 1; x++)
+			/*for(int x = -1; x < columns + 1; x++)
 			{
 				//Loop along y axis, starting from -1 to place floor or outerwall tiles.
 				for(int y = -1; y < rows + 1; y++)
@@ -86,7 +139,7 @@ namespace Completed
 					//Set the parent of our newly instantiated object instance to boardHolder, this is just organizational to avoid cluttering hierarchy.
 					instance.transform.SetParent (boardHolder);
 				}
-			}
+			}*/
 		}
 		
 		
@@ -111,19 +164,26 @@ namespace Completed
 		void LayoutObjectAtRandom (GameObject[] tileArray, int minimum, int maximum)
 		{
 			//Choose a random number of objects to instantiate within the minimum and maximum limits
-			int objectCount = Random.Range (minimum, maximum+1);
+			int objectCount = 3;//Random.Range (minimum, maximum+1);
 			
 			//Instantiate objects until the randomly chosen limit objectCount is reached
 			for(int i = 0; i < objectCount; i++)
 			{
 				//Choose a position for randomPosition by getting a random position from our list of available Vector3s stored in gridPosition
 				Vector3 randomPosition = RandomPosition();
+				int rand_x = 0;
+				int rand_y = 0;
+				while (boardArray[rand_y,rand_x] == 1) {
+					rand_x = Random.Range (0, boardArray.GetLength(0));
+					rand_y = Random.Range (0, boardArray.GetLength(1));
+				}
+				
 				
 				//Choose a random tile from tileArray and assign it to tileChoice
 				GameObject tileChoice = tileArray[Random.Range (0, tileArray.Length)];
 				
 				//Instantiate tileChoice at the position returned by RandomPosition with no change in rotation
-				Instantiate(tileChoice, randomPosition, Quaternion.identity);
+				Instantiate(tileChoice, new Vector3(rand_x, rand_y, 0), Quaternion.identity);
 			}
 		}
 		
@@ -138,16 +198,16 @@ namespace Completed
 			InitialiseList ();
 			
 			//Instantiate a random number of wall tiles based on minimum and maximum, at randomized positions.
-			LayoutObjectAtRandom (wallTiles, wallCount.minimum, wallCount.maximum);
+			//LayoutObjectAtRandom (wallTiles, wallCount.minimum, wallCount.maximum);
 			
 			//Instantiate a random number of food tiles based on minimum and maximum, at randomized positions.
-			LayoutObjectAtRandom (foodTiles, foodCount.minimum, foodCount.maximum);
+			//LayoutObjectAtRandom (foodTiles, foodCount.minimum, foodCount.maximum);
 			
 			//Determine number of enemies based on current level number, based on a logarithmic progression
 			int enemyCount = (int)Mathf.Log(level, 2f);
 			
 			//Instantiate a random number of enemies based on minimum and maximum, at randomized positions.
-			LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
+			//LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
 			
 			//Instantiate the exit tile in the upper right hand corner of our game board
 			Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
