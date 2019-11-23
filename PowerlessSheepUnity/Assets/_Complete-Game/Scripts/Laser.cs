@@ -32,7 +32,7 @@ namespace Completed
 				yDir = -3;
 
 
-			if (dir % 2 == 0)
+			if (dir % 2 == 1)
 				transform.Rotate(Vector3.forward * -90);
 			//Store start position to move from, based on objects current transform position.
 			Vector2 start = transform.position;

@@ -139,6 +139,7 @@ namespace Completed
 		{
 			//Call the AttemptMove method of the base class, passing in the component T (in this case Wall) and x and y direction to move.
 			//base.AttemptMove <T> (xDir, yDir);
+			base.AttemptMove<T>(xDir, yDir);
 
 			animator.SetInteger("direction", dir);
 
