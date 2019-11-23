@@ -202,5 +202,20 @@ namespace Completed
 			//Enemies are done moving, set enemiesMoving to false.
 			enemiesMoving = false;
 		}
+		public void restartLevel()
+		{
+			print("restart");
+			print(instance.level);
+			GameObject.Destroy(GameObject.Find("Board"));
+			instance.boardScript.SetupScene(instance.level);
+		}
+
+		public void goBackLevel()
+		{
+			print("go back");
+			GameObject.Destroy(GameObject.Find("Board"));
+			instance.boardScript.SetupScene(instance.level-1);
+		}
+
 	}
 }
