@@ -88,9 +88,9 @@ namespace Completed
 			{
 				case 1: levelText.text = "You used to be a famous superhero \n with lasers and stuff.\n  Your archenemy 'The Shepherd' started \n transforming all the people into sheep,\n so you investigated.\n Unfortuately you now became a sheep too ...\n ...and lost all your superpowers. "; break;
 				//level with eating grass, unpushable block?
-				case 2: levelText.text = "Great, you ate a lot. You're stronger now."; break;
+				case 2: levelText.text = "Great, you ate a lot. You feel stronger now."; break;
 				//level with pushing stuff (easy pushing level) //one enemy to avoid
-				case 3: levelText.text = "Nice. Want a challenge now?"; break;
+				case 3: levelText.text = "Nice! Want a challenge now?"; break;
 				// second push level
 				case 4: levelText.text = "One more to go."; break;
 				//level with pushing stuff (complex pushing level) //some enemies to avoid
