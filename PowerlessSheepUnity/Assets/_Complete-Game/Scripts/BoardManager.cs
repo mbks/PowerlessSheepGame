@@ -75,7 +75,7 @@ namespace Completed
 			return flipped;
 		}
 
-		void BoardSetup ()
+		void BoardSetup (int level)
 		{
 			//Instantiate Board and set boardHolder to its transform.
 			boardHolder = new GameObject ("Board").transform;
@@ -85,8 +85,16 @@ namespace Completed
 			1 = wall
 			2 = grass
 			**/
+			switch ( level)
+			{
+				case 1: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+								{1,0,0,0,0,0,0,0,0,1},
+								{1,0,0,0,0,0,0,0,0,1},
+								{1,0,2,2,2,2,2,2,-1,1},
+								{1,1,1,1,1,1,1,1,1,1}};
+							break;
 
-			boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+				default: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
 								{1,2,0,0,1,0,0,0,0,1},
 								{1,0,1,0,1,0,1,0,0,1},
 								{1,0,1,0,1,0,1,1,0,1},
@@ -96,7 +104,9 @@ namespace Completed
 								{1,0,1,0,1,0,1,0,0,1},
 								{1,0,1,0,0,0,1,0,-1,1},
 								{1,1,1,1,1,1,1,1,1,1}};
-
+							break;
+			}
+			
 			boardArray = flipArray(boardArray);
 
 			for(int i = -1; i < boardArray.GetLength(0)-1; i++) {
@@ -198,7 +208,7 @@ namespace Completed
 		public void SetupScene (int level)
 		{
 			//Creates the outer walls and floor.
-			BoardSetup ();
+			BoardSetup (level);
 			
 			//Reset our list of gridpositions.
 			InitialiseList ();
