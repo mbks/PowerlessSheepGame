@@ -91,14 +91,16 @@ namespace Completed
 				case 2: levelText.text = "Great, you learned to eat. You're stronger now."; break;
 				//level with pushing stuff (easy pushing level) //one enemy to avoid
 				case 3: levelText.text = "Nice. Want a challenge now?"; break;
+				// second push level
+				case 4: levelText.text = "One more to go."; break;
 				//level with pushing stuff (complex pushing level) //some enemies to avoid
-				case 4: levelText.text = "You proved to be smart. Your eyes start to burn."; break;
+				case 5: levelText.text = "You proved to be smart. Your eyes start to burn."; break;
 				//melt ice-block
-				case 5: levelText.text = "Do you think you can shoot on other things too?"; break;
+				case 6: levelText.text = "Do you think you can shoot on other things too?"; break;
 				//hard enemy-fighting-level
-				case 6: levelText.text = "You see 'The Shephard' now. You don't like him and you feel strong. "; break;
+				case 7: levelText.text = "You see 'The Shephard' now. You don't like him and you feel strong. "; break;
 				//Bossfight. Shoot at Shephard with your eyes
-				case 7: levelText.text = "Congratulations. \n You got all your superpowers back and got revenge on 'The Shephard'!\n But you are still a sheep....\nThe strange thing is: You dont care!\n Eating grass is great!";
+				case 8: levelText.text = "Congratulations. \n You got all your superpowers back and got revenge on 'The Shephard'!\n But you are still a sheep....\nThe strange thing is: You dont care!\n Eating grass is great!";
 						Win();
 						return;
 				default: levelText.text = "Day " + level; break;
@@ -200,7 +202,6 @@ namespace Completed
 			//Enemies are done moving, set enemiesMoving to false.
 			enemiesMoving = false;
 		}
-
 		public void restartLevel()
 		{
 			print("restart");

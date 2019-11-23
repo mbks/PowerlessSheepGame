@@ -82,6 +82,7 @@ namespace Completed
 			boardHolder = new GameObject ("Board").transform;
 
 			/**
+			-2 = start
 			-1 = exit
 			0 = ground
 			1 = wall
@@ -91,10 +92,45 @@ namespace Completed
 			switch ( level)
 			{
 				case 1: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
-								{1,0,0,0,0,0,0,0,0,1},
-								{1,0,0,3,0,0,0,0,0,1},
+								{1,-2,3,3,3,3,3,3,0,1},
+								{1,0,3,3,3,3,3,3,0,1},
 								{1,0,2,2,2,2,2,2,-1,1},
 								{1,1,1,1,1,1,1,1,1,1}};
+							break;
+
+				case 2: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,0,0,1,0,0,0,-1,1},
+												{1,0,0,0,3,0,0,0,0,1},
+												{1,0,0,0,1,0,0,0,0,1},
+												{1,0,0,0,3,0,0,0,0,1},
+												{1,0,0,0,1,0,0,0,0,1},
+												{1,0,0,0,3,0,0,0,0,1},
+												{1,0,0,0,1,0,0,0,0,1},
+												{1,-2,0,0,3,0,0,0,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
+							break;
+
+				case 3: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,1,0,0,1,0,0,-1,1},
+												{1,0,3,0,0,1,0,1,0,1},
+												{1,3,1,1,0,1,0,0,1,1},
+												{1,0,0,1,0,0,3,3,0,1},
+												{1,0,0,1,0,1,1,0,0,1},
+												{1,1,3,1,0,0,0,0,0,1},
+												{1,0,0,1,0,1,0,0,0,1},
+												{1,-2,0,1,0,1,0,0,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
+							break;
+				case 4: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,0,0,3,3,0,0,-1,1},
+												{1,0,3,0,3,0,0,0,0,1},
+												{1,3,0,3,3,3,0,0,0,1},
+												{1,0,3,3,0,3,3,0,0,1},
+												{1,3,3,0,0,0,0,0,0,1},
+												{1,0,3,3,0,0,0,0,0,1},
+												{1,0,0,3,3,0,0,0,0,1},
+												{1,-2,0,3,0,3,0,0,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
 							break;
 
 				default: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
@@ -142,6 +178,11 @@ namespace Completed
 						instance.transform.SetParent (boardHolder);
 						instance = Instantiate (exit, new Vector3 (j, i, 0f), Quaternion.identity);
 						instance.transform.SetParent (boardHolder);
+					} else if(boardArray[i+1,j+1] == -2) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						GameManager.instance.player.gameObject.transform.position = new Vector3(j, i, 0);
 					}
 				}
 			}
@@ -217,6 +258,7 @@ namespace Completed
 		//SetupScene initializes our level and calls the previous functions to lay out the game board
 		public void SetupScene (int level)
 		{
+			GameManager.instance.player = GameObject.Find("Player").GetComponent<Player>();
 			//Creates the outer walls and floor.
 			BoardSetup (level);
 			
