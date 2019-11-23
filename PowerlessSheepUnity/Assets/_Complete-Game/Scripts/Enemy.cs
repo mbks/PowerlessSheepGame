@@ -79,7 +79,9 @@ namespace Completed
 
 		public void Kill ()
 		{
-			gameObject.SetActive (false);
+			//gameObject.SetActive (false);
+			GameManager.instance.RemoveEnemyFromList(this);
+			Destroy(this.gameObject);
 		}
 
 		//OnCantMove is called if Enemy attempts to move into a space occupied by a Player, it overrides the OnCantMove function of MovingObject

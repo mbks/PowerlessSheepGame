@@ -8,12 +8,9 @@ namespace Completed
 	{
 
 
-		//Start overrides the virtual Start function of the base class.
-		protected override void Start ()
-		{
+		protected void Awake() {
 			gameObject.transform.position = GameManager.instance.player.gameObject.transform.position;
-			//Call the start function of our base class MovingObject.
-			base.Start ();
+			base.Start();
 		}
 
 
@@ -26,14 +23,40 @@ namespace Completed
 			int xDir = 0;
 			int yDir = 0;
 			if (dir == 0)
-				xDir = 1;
+				xDir = 3;
 			if (dir == 2)
-				xDir = -1;
+				xDir = -3;
 			if (dir == 3)
-				yDir = 1;
+				yDir = 3;
 			if (dir == 1)
-				yDir = -1;
-			base.AttemptMove <Enemy> (xDir, yDir);
+				yDir = -3;
+
+
+			if (dir % 2 == 0)
+				transform.Rotate(Vector3.forward * -90);
+			//Store start position to move from, based on objects current transform position.
+			Vector2 start = transform.position;
+
+			// Calculate end position based on the direction parameters passed in when calling Move.
+			Vector2 end = start + new Vector2 (xDir, yDir);
+
+			StartCoroutine (SmoothMovement (end));
+
+			// Check hit
+
+			//Disable the boxCollider so that linecast doesn't hit this object's own collider.
+			gameObject.GetComponent<BoxCollider2D>().enabled = false;
+			GameManager.instance.player.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+			//Cast a line from start point to end point checking collision on blockingLayer.
+			RaycastHit2D hit = Physics2D.Linecast (start, end, blockingLayer);
+
+			//Re-enable boxCollider after linecast
+			gameObject.GetComponent<BoxCollider2D>().enabled = true;
+			GameManager.instance.player.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+			Enemy hitEnemy = hit.transform.GetComponent<Enemy>();
+			if (hitEnemy != null)
+				hitEnemy.Kill();
 		}
 
 		//OnCantMove is called if Enemy attempts to move into a space occupied by a Player, it overrides the OnCantMove function of MovingObject

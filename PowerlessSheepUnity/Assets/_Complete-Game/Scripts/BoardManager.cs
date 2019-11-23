@@ -85,12 +85,14 @@ namespace Completed
 			0 = ground
 			1 = wall
 			2 = grass
+
+			4 = enemy
 			**/
 			switch ( level)
 			{
 				case 1: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
 								{1,0,0,0,0,0,0,0,0,1},
-								{1,0,0,0,0,0,0,0,0,1},
+								{1,0,0,0,0,4,0,0,0,1},
 								{1,0,2,2,2,2,2,2,-1,1},
 								{1,1,1,1,1,1,1,1,1,1}};
 							break;
@@ -131,6 +133,13 @@ namespace Completed
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 						toInstantiate = foodTiles[0];
+						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					} else if(boardArray[i+1,j+1] == 4) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						toInstantiate = enemyTiles[0];
 						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == -1) {

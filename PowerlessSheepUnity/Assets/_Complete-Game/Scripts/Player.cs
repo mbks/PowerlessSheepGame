@@ -20,6 +20,8 @@ namespace Completed
 
 		public GameObject Laser;
 
+		private GameObject instanceLaser;
+
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int ALIVE = 1;
 		private bool hasLaser =  true;
@@ -122,12 +124,14 @@ namespace Completed
 			}
 			if (hasLaser)
 			{
-				int shoot = (int) (Input.GetAxisRaw ("Fire1"));
-				if (shoot > 0)
+				if ((Input.GetButton("Fire1")))
 				{
-					GameObject laser = Instantiate (Laser, new Vector3 (0f, 0f, 0f), Quaternion.identity);
-					laser.GetComponent<Laser>().AttemptMove<Enemy>(dir, 0);
-				  print("shoot");
+					if (instanceLaser == null) {
+						instanceLaser = Instantiate (Laser, new Vector3 (0f, 0f, 0f), Quaternion.identity);
+						instanceLaser.transform.Rotate(Vector3.forward * -90);
+						instanceLaser.GetComponent<Laser>().AttemptMove<Enemy>(dir, 0);
+						Destroy(instanceLaser, 0.3f);
+					}
 				}
 			}
 		}
