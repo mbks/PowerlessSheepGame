@@ -98,9 +98,11 @@ namespace Completed
 				//melt ice-block
 				case 6: levelText.text = "Do you think you can shoot on other things too?"; break;
 				//hard enemy-fighting-level
-				case 7: levelText.text = "You see 'The Shephard' now.\n You don't like him and you feel strong. "; break;
+				case 7: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much saver now, and somehow lightweighted..."; break;
+				//introduction in walking over water
+				case 8: levelText.text = "Didn't you thought you were save? \n You must have been wrong there. \n You see 'The Shephard' now.\n You don't like him and you feel strong. "; break;
 				//Bossfight. Shoot at Shephard with your eyes
-				case 8: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
+				case 9: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
 						Win();
 						return;
 				default: levelText.text = "Day " + level; break;
