@@ -25,7 +25,6 @@ namespace Completed
 			}
 		}
 		
-		
 		public int columns = 8; 										//Number of columns in our game board.
 		public int rows = 8;											//Number of rows in our game board.
 		public Count wallCount = new Count (5, 9);						//Lower and upper limit for our random number of walls per level.
@@ -36,6 +35,8 @@ namespace Completed
 		public GameObject[] foodTiles;									//Array of food prefabs.
 		public GameObject[] enemyTiles;									//Array of enemy prefabs.
 		public GameObject[] outerWallTiles;								//Array of outer tile prefabs.
+
+		public GameObject[] boxTiles;
 		
 		private Transform boardHolder;									//A variable to store a reference to the transform of our Board object.
 		private List <Vector3> gridPositions = new List <Vector3> ();	//A list of possible locations to place tiles.
@@ -85,12 +86,13 @@ namespace Completed
 			0 = ground
 			1 = wall
 			2 = grass
+			3 = box
 			**/
 			switch ( level)
 			{
 				case 1: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
 								{1,0,0,0,0,0,0,0,0,1},
-								{1,0,0,0,0,0,0,0,0,1},
+								{1,0,0,3,0,0,0,0,0,1},
 								{1,0,2,2,2,2,2,2,-1,1},
 								{1,1,1,1,1,1,1,1,1,1}};
 							break;
@@ -125,6 +127,13 @@ namespace Completed
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 						toInstantiate = foodTiles[0];
+						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+					}else if(boardArray[i+1,j+1] == 3) {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						toInstantiate = boxTiles[0];
 						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == -1) {
