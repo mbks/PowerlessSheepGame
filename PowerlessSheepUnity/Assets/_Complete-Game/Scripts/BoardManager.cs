@@ -155,7 +155,8 @@ namespace Completed
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == 1) {
-						GameObject toInstantiate = outerWallTiles[Random.Range (0,outerWallTiles.Length)];
+						var wallAdjacency = getWallAdjacency(new BoardArray(boardArray), i + 1, j + 1);
+						GameObject toInstantiate = outerWallTiles[wallAdjacency.toIndex()];
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == 2) {
@@ -208,6 +209,20 @@ namespace Completed
 				}
 			}*/
 		}
+
+		WallAdjacency getWallAdjacency(BoardArray boardArray, int x, int y) {
+			var tile = boardArray.get(x, y);
+			if(tile == null) {
+				return null;
+			}
+			var left = boardArray.get(x - 1, y) == 1;
+			var right = boardArray.get(x + 1, y) == 1;
+			var bottom = boardArray.get(x, y - 1) == 1;
+			var top = boardArray.get(x, y + 1) == 1;
+			return new WallAdjacency { left = left, right = right, bottom = bottom, top = top };
+		}
+
+
 		
 		
 		//RandomPosition returns a random position from our list gridPositions.
@@ -279,6 +294,48 @@ namespace Completed
 			
 			//Instantiate the exit tile in the upper right hand corner of our game board
 			//Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
+		}
+	}
+
+	class BoardArray {
+		public BoardArray(int[,] array2d) {
+			this.array2d = array2d;
+		}
+
+		public int? get(int x, int y) {
+			if(!(0 <= x && x < this.width && 0 <= y && y < this.height)) {
+				return null;
+			} else {
+				return this.array2d[x,y];
+			}
+		}
+
+		public int width {
+			get {
+				return this.array2d.GetLength(0);
+			}
+		}
+
+		public int height {
+			get {
+				return this.array2d.GetLength(1);
+			}
+		}
+
+		private int[,] array2d;
+	}
+
+	class WallAdjacency {
+		public bool left;
+		public bool right;
+		public bool top;
+		public bool bottom;
+
+		public int toIndex() {
+			return (this.bottom ? 8 : 0)
+				+ (this.top ? 4 : 0)
+				+ (this.right ? 2 : 0)
+				+ (this.left ? 1 : 0);
 		}
 	}
 }
