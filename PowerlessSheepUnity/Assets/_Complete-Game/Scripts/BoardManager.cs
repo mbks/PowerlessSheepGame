@@ -37,6 +37,10 @@ namespace Completed
 		public GameObject[] enemyTiles;									//Array of enemy prefabs.
 		public GameObject[] outerWallTiles;								//Array of outer tile prefabs.
 
+		public GameObject[] boxTiles;
+		public GameObject unmovableBox;
+		public GameObject ice;
+		public GameObject water;
 		private Transform boardHolder;									//A variable to store a reference to the transform of our Board object.
 		private List <Vector3> gridPositions = new List <Vector3> ();	//A list of possible locations to place tiles.
 
@@ -86,14 +90,17 @@ namespace Completed
 			0 = ground
 			1 = wall
 			2 = grass
-
+			3 = box
 			4 = enemy
+			5 = notMovableBox
+			6 = ice
+			7 = water
 			**/
 			switch ( level)
 			{
 				case 1: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
-								{1,0,0,0,0,0,0,0,0,1},
-								{1,0,0,0,0,4,0,0,0,1},
+								{1,-2,5,0,5,0,5,0,0,1},
+								{1,0,0,5,0,5,0,5,0,1},
 								{1,0,2,2,2,2,2,2,-1,1},
 								{1,1,1,1,1,1,1,1,1,1}};
 							break;
@@ -160,27 +167,6 @@ namespace Completed
 						GameObject toInstantiate = outerWallTiles[wallAdjacency.toIndex()];
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
-					} else if(boardArray[i+1,j+1] == 2) {
-						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
-						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
-						instance.transform.SetParent (boardHolder);
-						toInstantiate = foodTiles[0];
-						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
-						instance.transform.SetParent (boardHolder);
-					}else if(boardArray[i+1,j+1] == 3) {
-						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
-						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
-						instance.transform.SetParent (boardHolder);
-						toInstantiate = wallTiles[0];
-						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
-						instance.transform.SetParent (boardHolder);
-					} else if(boardArray[i+1,j+1] == 4) {
-						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
-						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
-						instance.transform.SetParent (boardHolder);
-						toInstantiate = enemyTiles[0];
-						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
-						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == -1) {
 						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
@@ -192,6 +178,21 @@ namespace Completed
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 						GameManager.instance.player.gameObject.transform.position = new Vector3(j, i, 0);
+					} else {
+						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
+						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						switch(boardArray[i+1,j+1]) {
+						case 2: toInstantiate = foodTiles[0]; break;
+						case 3: toInstantiate = boxTiles[0]; break;
+						case 4: toInstantiate = enemyTiles[0]; break;
+						case 5: toInstantiate = unmovableBox; break;
+						case 6: toInstantiate = ice; break;
+						case 7: toInstantiate = water; break;
+						default: toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)]; break;
+						}
+						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
 					}
 				}
 			}
