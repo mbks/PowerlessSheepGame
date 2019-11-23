@@ -124,7 +124,11 @@ namespace Completed
 			{
 				int shoot = (int) (Input.GetAxisRaw ("Fire1"));
 				if (shoot > 0)
+				{
+					GameObject laser = Instantiate (Laser, new Vector3 (0f, 0f, 0f), Quaternion.identity);
+					laser.GetComponent<Laser>().AttemptMove<Enemy>(dir, 0);
 				  print("shoot");
+				}
 			}
 		}
 

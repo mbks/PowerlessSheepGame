@@ -26,13 +26,13 @@ namespace Completed
 			int xDir = 0;
 			int yDir = 0;
 			if (dir == 0)
-				xDir = 3;
+				xDir = 1;
 			if (dir == 2)
-				xDir = -3;
+				xDir = -1;
 			if (dir == 3)
-				yDir = 3;
+				yDir = 1;
 			if (dir == 1)
-				yDir = -3;
+				yDir = -1;
 			base.AttemptMove <Enemy> (xDir, yDir);
 		}
 
