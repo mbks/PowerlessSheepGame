@@ -115,6 +115,17 @@ namespace Completed
 		{
 			//Call the AttemptMove method of the base class, passing in the component T (in this case Wall) and x and y direction to move.
 			base.AttemptMove <T> (xDir, yDir);
+			
+			int dir = 0;
+			if (xDir == 1)
+				dir = 0;
+			if (xDir == -1)
+				dir = 2;
+			if (yDir == 1)
+				dir = 3;
+			if (yDir == -1)
+				dir = 1;
+			animator.SetInteger("direction", dir);
 
 			//Hit allows us to reference the result of the Linecast done in Move.
 			RaycastHit2D hit;
