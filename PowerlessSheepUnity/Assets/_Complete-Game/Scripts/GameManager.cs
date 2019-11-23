@@ -204,14 +204,16 @@ namespace Completed
 		public void restartLevel()
 		{
 			print("restart");
-			//instance.InitGame();
+			print(instance.level);
+			GameObject.Destroy(GameObject.Find("Board"));
+			instance.boardScript.SetupScene(instance.level);
 		}
 
 		public void goBackLevel()
 		{
 			print("go back");
-			//level--;
-			//instance.InitGame();
+			GameObject.Destroy(GameObject.Find("Board"));
+			instance.boardScript.SetupScene(instance.level-1);
 		}
 
 	}
