@@ -10,6 +10,11 @@ Written in a Game-Jam 2019 by:
 - Marc Buskies
 - Alicia Hormann
 
+Controls:
+- Up,Down,Left,Right/WASD for moving around (and moving stones if unlocked)
+- Space for Baa-ing
+- Ctrl for shooting lasers if unlocked
+
 Used assets from:
 Unity Asset Store(2D-Roguelike) 
 - The Sheep by Daniel Eddeland(https://opengameart.org/content/lpc-style-farm-animals)
