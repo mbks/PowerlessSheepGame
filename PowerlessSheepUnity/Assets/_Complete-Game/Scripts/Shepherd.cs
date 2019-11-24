@@ -17,7 +17,7 @@ namespace Completed
 
         public AudioClip scream;
 
-        private int hp = 1;
+        private int hp = 3;
 
         // Start is called before the first frame update
 

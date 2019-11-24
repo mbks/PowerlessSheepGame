@@ -19,7 +19,7 @@ namespace Completed
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
-		private int level = 5;									//Current level number, expressed in game as "Day 1".
+		private int level = 1;									//Current level number, expressed in game as "Day 1".
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 		private bool enemiesMoving;								//Boolean to check if enemies are moving.
 		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
@@ -106,19 +106,25 @@ namespace Completed
 				case 6: levelText.text = "Do you think you can shoot on other things too?";
 						instance.player.hasLaser = true; break;
 				//hard enemy-fighting-level
-				case 7: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much safer now, and somehow lightweighted..."; 
+				case 7:
+					levelText.text = "Do you dare to take on more enemies?";
+					instance.player.hasLaser = true;
+						instance.player.walkOverWater = true; break;
+				case 8: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much safer now, and somehow lightweighted..."; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//introduction in walking over water
-				case 8: levelText.text = "Wow! Can you really walk over water now?\n Try it again!"; 
+				case 9: levelText.text = "Wow! Can you really walk over water now?\n Try it again!"; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//another walking over water
-				case 9: levelText.text = "Did you think you were save? \n You must have been wrong there. \n You see 'The Shepherd' now.\n Be up for a challenge. "; 
+				case 10: levelText.text = "Did you think you were save? \n You must have been wrong there. \n You see 'The Shepherd' now.\n Be up for a challenge. "; 
 						instance.player.hasLaser = true;
-						instance.player.walkOverWater = true; break;
+						instance.player.walkOverWater = true; 
+						SoundManager.instance.PlayMusic();
+						break;
 				//Bossfight. Shoot at Shephard with your eyes
-				case 10: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
+				case 11: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shepherd'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
 						Win();                                       
 						return;
 				default: levelText.text = "Level " + level; break;
@@ -197,6 +203,7 @@ namespace Completed
             levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
 			Invoke("HideLevelImage", 10);
 			levelImage.SetActive(true);
+			SoundManager.instance.StopMusic();
 			enabled = false;
 		}
 

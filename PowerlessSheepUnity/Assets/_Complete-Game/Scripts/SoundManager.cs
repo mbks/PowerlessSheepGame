@@ -41,6 +41,20 @@ namespace Completed
 			ssource.Play ();
 		}
 
+		public void PlayMusic()
+		{
+			//Set the clip of our efxSource audio source to the clip passed in as a parameter.
+			musicSource.enabled = true;
+			musicSource.loop = true;
+
+			//Play the clip.
+			musicSource.Play ();
+		}
+
+		public void StopMusic() {
+			musicSource.Stop();
+		}
+
 
 		//RandomizeSfx chooses randomly between various audio clips and slightly changes their pitch.
 		public void RandomizeSfx (params AudioClip[] clips)

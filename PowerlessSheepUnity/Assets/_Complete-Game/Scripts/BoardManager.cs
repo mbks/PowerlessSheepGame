@@ -216,6 +216,7 @@ namespace Completed
 												{1,0,0,0,0,0,0,0,0,1},
 												{1,0,0,0,0,0,0,0,42,1},
 												{1,1,1,1,1,1,1,1,1,1}};
+												SoundManager.instance.PlayMusic();
 							break;
 				default: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
 								{1,2,0,0,1,0,0,0,0,1},
