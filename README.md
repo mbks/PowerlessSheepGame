@@ -14,6 +14,7 @@ Controls:
 - Up,Down,Left,Right/WASD for moving around (and moving stones if unlocked)
 - Space for Baa-ing
 - Ctrl for shooting lasers if unlocked
+- Esc for credits and quitting
 
 Used assets from:
 Unity Asset Store(2D-Roguelike) 
