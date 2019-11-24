@@ -89,7 +89,6 @@ namespace Completed
 						hitShepherd.Hit();
 					}
 				} else {
-
 				}
 			}
 

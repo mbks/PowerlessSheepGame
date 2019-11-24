@@ -298,6 +298,11 @@ namespace Completed
 			return new WallAdjacency { left = left, right = right, bottom = bottom, top = top };
 		}
 
+		public void placeExit(Vector3 position) {
+			GameObject instance = Instantiate (exit, position, Quaternion.identity);
+			instance.transform.SetParent (boardHolder);
+		}
+
 
 
 		//RandomPosition returns a random position from our list gridPositions.

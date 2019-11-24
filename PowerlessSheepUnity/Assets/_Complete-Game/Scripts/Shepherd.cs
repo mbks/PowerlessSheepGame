@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Completed
 {
+    using System.Collections.Generic;		//Allows us to use Lists.
+	using UnityEngine.UI;					//Allows us to use UI.
     public class Shepherd : MovingObject
     {
 
@@ -15,7 +17,7 @@ namespace Completed
 
         public AudioClip scream;
 
-        private int hp = 10;
+        private int hp = 1;
 
         // Start is called before the first frame update
 
@@ -34,7 +36,8 @@ namespace Completed
                     xDir = target.position.x > transform.position.x ? 1 : -1;
 
                     AttemptMove<Wall>(xDir, yDir);
-                    SoundManager.instance.PlaySingle (laughSound);
+                    if (Random.RandomRange(0,2) == 0)
+                        SoundManager.instance.PlaySingle (laughSound);
                     moveInstead = false;
                 } else {
                     for (int i = 0; i < 4; i++) {
@@ -64,8 +67,9 @@ namespace Completed
         }
 
         private void Die() {
+            print("Shepherd dead");
             SoundManager.instance.PlaySingle(scream);
-            GameManager.instance.Win();
+            GameManager.instance.placeExit(transform.position);
             Destroy(this.gameObject);
         }
     }

@@ -31,10 +31,14 @@ namespace Completed
 		public void PlaySingle(AudioClip clip)
 		{
 			//Set the clip of our efxSource audio source to the clip passed in as a parameter.
-			efxSource.clip = clip;
+
+
+			AudioSource ssource = gameObject.AddComponent<AudioSource>();
+			ssource.clip = clip;
+			ssource.enabled = true;
 
 			//Play the clip.
-			efxSource.Play ();
+			ssource.Play ();
 		}
 
 

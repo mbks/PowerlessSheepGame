@@ -119,7 +119,7 @@ namespace Completed
 						instance.player.walkOverWater = true; break;
 				//Bossfight. Shoot at Shephard with your eyes
 				case 10: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
-						Win();
+						Win();                                       
 						return;
 				default: levelText.text = "Level " + level; break;
 			}
@@ -138,11 +138,15 @@ namespace Completed
 
 		}
 
+		public void placeExit(Vector3 pos) {
+			boardScript.placeExit(pos);
+		}
+
 
 		//Hides black image used between levels
 		void HideLevelImage()
 		{
-			//Disable the levelImage gameObject.
+			//Disable the levelImage gameObject.                                                                                                                           
 			levelImage.SetActive(false);
 
 			//Set doingSetup to false allowing player to move again.
@@ -190,6 +194,8 @@ namespace Completed
 
 		public void Win()
 		{
+            levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
+			Invoke("HideLevelImage", 10);
 			levelImage.SetActive(true);
 			enabled = false;
 		}

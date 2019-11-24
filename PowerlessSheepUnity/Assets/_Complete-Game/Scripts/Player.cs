@@ -141,7 +141,7 @@ namespace Completed
 				}
 			}
 
-			if (Input.GetButton("Jump")) {
+			if (Input.GetButtonDown("Jump")) {
 				SoundManager.instance.PlaySingle(screamSound);
 			}
 		}
