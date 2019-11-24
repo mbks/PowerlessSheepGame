@@ -18,6 +18,8 @@ namespace Completed
 		public AudioClip drinkSound2;				//2 of 2 Audio clips to play when player collects a soda object.
 		public AudioClip gameOverSound;				//Audio clip to play when player dies.
 
+		public AudioClip screamSound;
+
 		public GameObject Laser;
 
 		private GameObject instanceLaser;
@@ -136,6 +138,10 @@ namespace Completed
 						Destroy(instanceLaser, 0.3f);
 					}
 				}
+			}
+
+			if (Input.GetButton("Jump")) {
+				SoundManager.instance.PlaySingle(screamSound);
 			}
 		}
 
