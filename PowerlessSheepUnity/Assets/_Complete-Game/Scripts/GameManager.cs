@@ -30,10 +30,12 @@ namespace Completed
 		void Awake()
 		{
             //Check if instance already exists
-            if (instance == null)
-
-                //if not, set instance to this
+            if (instance == null) {
+				//if not, set instance to this
                 instance = this;
+			}
+
+                
 
             //If instance already exists and it's not this:
             else if (instance != this)
@@ -60,12 +62,14 @@ namespace Completed
         static public void CallbackInitialization()
         {
             //register the callback to be called everytime the scene is loaded
+			
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         //This is called each time a scene is loaded.
         static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
+			print("reload");
             instance.level++;
             instance.InitGame();
         }
@@ -95,21 +99,22 @@ namespace Completed
 				// second push level
 				case 4: levelText.text = "One more to go."; break;
 				//level with pushing stuff (complex pushing level) //some enemies to avoid
-				case 5: levelText.text = "You proved to be smart.\n Your eyes start to burn.";
-						instance.player.hasLaser = true; break;
+
+				case 5: levelText.text = "You proved to be smart.\n Your eyes start to burn again."; 
+						instance.player.hasLaser = true; break; 
 						//melt ice-block
 				case 6: levelText.text = "Do you think you can shoot on other things too?";
 						instance.player.hasLaser = true; break;
 				//hard enemy-fighting-level
-				case 7: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much saver now, and somehow lightweighted...";
+				case 7: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much safer now, and somehow lightweighted..."; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//introduction in walking over water
-				case 8: levelText.text = "Wow! Do you really can walk over water now? Try it again!";
+				case 8: levelText.text = "Wow! Can you really walk over water now?\n Try it again!"; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//another walking over water
-				case 9: levelText.text = "Didn't you thought you were save? \n You must have been wrong there. \n You see 'The Shephard' now.\n You don't like him and you feel strong. ";
+				case 9: levelText.text = "Did you think you were save? \n You must have been wrong there. \n You see 'The Shepherd' now.\n Be up for a challenge. "; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 				//Bossfight. Shoot at Shephard with your eyes
@@ -174,14 +179,13 @@ namespace Completed
 		//GameOver is called when the player reaches 0 food points
 		public void GameOver()
 		{
+			doingSetup = true;
 			//Set levelText to display number of levels passed and game over message
 			levelText.text = "After " + level + " levels, you died.";
-
-			//Enable black background image gameObject.
 			levelImage.SetActive(true);
-
-			//Disable this GameManager.
-			enabled = false;
+			Invoke("HideLevelImage", levelStartDelay);
+			GameObject.Destroy(GameObject.Find("Board"));
+			instance.boardScript.SetupScene(instance.level);
 		}
 
 		public void Win()

@@ -19,6 +19,8 @@ namespace Completed
 		public AudioClip gameOverSound;				//Audio clip to play when player dies.
 		public AudioClip waterSound;
 
+		public AudioClip screamSound;
+
 		public GameObject Laser;
 
 		private GameObject instanceLaser;
@@ -137,6 +139,10 @@ namespace Completed
 						Destroy(instanceLaser, 0.3f);
 					}
 				}
+			}
+
+			if (Input.GetButton("Jump")) {
+				SoundManager.instance.PlaySingle(screamSound);
 			}
 		}
 
