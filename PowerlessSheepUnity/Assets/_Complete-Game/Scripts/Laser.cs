@@ -6,6 +6,10 @@ namespace Completed
 	//Enemy inherits from MovingObject, our base class for objects that can move, Player also inherits from this.
 	public class Laser : MovingObject
 	{
+		public AudioClip laserSound1;
+		public AudioClip hitSoundFigure;
+		public AudioClip hitSoundIce;
+
 		GameObject owner;
 		public void setOwner(GameObject gameObject) {
 			owner = gameObject;
@@ -14,6 +18,7 @@ namespace Completed
 
 
 		protected void Awake() {
+			SoundManager.instance.PlaySingle(laserSound1);
 			//gameObject.transform.position = GameManager.instance.player.gameObject.transform.position;
 			base.Start();
 		}
@@ -61,23 +66,33 @@ namespace Completed
 			gameObject.GetComponent<BoxCollider2D>().enabled = true;
 			owner.gameObject.GetComponent<BoxCollider2D>().enabled = true;
 			foreach (RaycastHit2D hit in hits) {
-				if (hit.transform != null) 
+				if (hit.transform != null)
 				{
 					Enemy hitEnemy = hit.transform.GetComponent<Enemy>();
-					if (hitEnemy != null)
+					if (hitEnemy != null) {
+						SoundManager.instance.PlaySingle(hitSoundFigure);
 						hitEnemy.Kill();
+					}
 					Ice hitIce = hit.transform.GetComponent<Ice>();
-					if (hitIce != null)
+					if (hitIce != null) {
+						SoundManager.instance.PlaySingle(hitSoundIce);
 						hitIce.DamageWall(3);
+					}
 					Player hitPlayer = hit.transform.GetComponent<Player>();
-					if (hitPlayer != null)
+					if (hitPlayer != null) {
+						SoundManager.instance.PlaySingle(hitSoundFigure);
 						hitPlayer.Kill();
+					}
 					Shepherd hitShepherd = hit.transform.GetComponent<Shepherd>();
-					if (hitShepherd != null)
+					if (hitShepherd != null) {
+						SoundManager.instance.PlaySingle(hitSoundFigure);
 						hitShepherd.Hit();
+					}
+				} else {
+
 				}
 			}
-			
+
 		}
 
 		//OnCantMove is called if Enemy attempts to move into a space occupied by a Player, it overrides the OnCantMove function of MovingObject
