@@ -295,7 +295,7 @@ namespace Completed
 		{
 			GameManager.instance.player = GameObject.Find("Player").GetComponent<Player>();
 			//Creates the outer walls and floor.
-			BoardSetup (5);
+			BoardSetup (level);
 
 			//Reset our list of gridpositions.
 			InitialiseList ();
