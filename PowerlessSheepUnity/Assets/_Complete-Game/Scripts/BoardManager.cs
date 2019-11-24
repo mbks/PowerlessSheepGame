@@ -31,6 +31,7 @@ namespace Completed
 		public Count wallCount = new Count (5, 9);						//Lower and upper limit for our random number of walls per level.
 		public Count foodCount = new Count (1, 5);						//Lower and upper limit for our random number of food items per level.
 		public GameObject exit;											//Prefab to spawn for exit.
+        public GameObject[] exitDecorations;
 		public GameObject[] floorTiles;									//Array of floor prefabs.
 		public GameObject[] wallTiles;									//Array of wall prefabs.
 		public GameObject[] foodTiles;									//Array of food prefabs.
@@ -218,11 +219,26 @@ namespace Completed
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					} else if(boardArray[i+1,j+1] == -1) {
+                        GameObject exitDecoration = null;
+                        switch (level)
+                        {
+                            case 1:
+                                exitDecoration = exitDecorations[0];
+                                break;
+                            case 3:
+                                exitDecoration = exitDecorations[1];
+                                break;
+                        }
+
 						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 						instance = Instantiate (exit, new Vector3 (j, i, 0f), Quaternion.identity);
 						instance.transform.SetParent (boardHolder);
+                        if(exitDecoration != null) {
+                            instance = Instantiate(exitDecoration, new Vector3(j, i, 0f), Quaternion.identity);
+                            instance.transform.SetParent(boardHolder);
+                        }
 					} else if(boardArray[i+1,j+1] == -2) {
 						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];
 						GameObject instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;
