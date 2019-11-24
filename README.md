@@ -3,7 +3,7 @@ Topic: Powerless Sheep
 
 __The powerless sheep.__
 
-Written in a Game-Jam 2019 by:
+Written in a Game-Jam 2019 of the University of Bonn by:
 - Benjamin Bourgart
 - Jan de Haan
 - Rohland Kohlring
