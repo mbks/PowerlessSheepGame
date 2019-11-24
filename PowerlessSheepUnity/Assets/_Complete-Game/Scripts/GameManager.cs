@@ -109,7 +109,7 @@ namespace Completed
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//introduction in walking over water
-				case 8: levelText.text = "Wow! Do you really can walk over water now? Try it again!"; 
+				case 8: levelText.text = "Wow! Do you really can walk over water now?\n Try it again!"; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//another walking over water
@@ -178,14 +178,13 @@ namespace Completed
 		//GameOver is called when the player reaches 0 food points
 		public void GameOver()
 		{
+			doingSetup = true;
 			//Set levelText to display number of levels passed and game over message
 			levelText.text = "After " + level + " levels, you died.";
-
-			//Enable black background image gameObject.
 			levelImage.SetActive(true);
-
-			//Disable this GameManager.
-			enabled = false;
+			Invoke("HideLevelImage", levelStartDelay);
+			GameObject.Destroy(GameObject.Find("Board"));
+			instance.boardScript.SetupScene(instance.level);
 		}
 
 		public void Win()
