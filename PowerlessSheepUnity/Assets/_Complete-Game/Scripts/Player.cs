@@ -170,7 +170,7 @@ namespace Completed
                 if (hit.transform != null)
                 {
                     Box box = hit.transform.GetComponent<Box>();
-				    if (box != null) {
+				    if (box != null && !isMoving) {
 					    box.AttemptMove<Wall>(xDir,yDir);
 				    }
 				    Water water = hit.transform.GetComponent<Water>();
@@ -205,8 +205,6 @@ namespace Completed
 			Vector2 end = start + new Vector2 (xDir, yDir);
 
             end = new Vector2(Mathf.Round(end.x), Mathf.Round(end.y));  // fixing floating point errors
-
-
 			StartCoroutine (SmoothMovement (end));
 		}
 
