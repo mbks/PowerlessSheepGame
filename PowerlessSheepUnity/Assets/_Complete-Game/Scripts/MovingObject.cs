@@ -34,10 +34,15 @@ namespace Completed
 		protected virtual bool Move (int xDir, int yDir, out RaycastHit2D hit)
 		{
 			//Store start position to move from, based on objects current transform position.
-			Vector2 start = transform.position;
+			//Vector2 start = transform.position;
 
 			// Calculate end position based on the direction parameters passed in when calling Move.
-			Vector2 end = start + new Vector2 (xDir, yDir);
+			//Vector2 end = start + new Vector2 (xDir, yDir);
+
+			
+			Vector2 pos = transform.position;
+			Vector2 start = pos + new Vector2 (0.6f*xDir, 0.6f*yDir);
+			Vector2 end = pos + new Vector2 (xDir, yDir);
 
 			//Disable the boxCollider so that linecast doesn't hit this object's own collider.
 			boxCollider.enabled = false;

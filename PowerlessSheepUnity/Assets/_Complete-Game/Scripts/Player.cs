@@ -24,12 +24,17 @@ namespace Completed
 
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int ALIVE = 1;
-		public bool hasLaser =  true;
+		public bool hasLaser;
+		public bool walkOverWater;
 		private int dir = 0;
 #if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
         private Vector2 touchOrigin = -Vector2.one;	//Used to store location of screen touch origin for mobile controls.
 #endif
 
+		void Awake() {
+			walkOverWater = false;
+			hasLaser = true;
+		}
 
 		//Start overrides the Start function of MovingObject
 		protected override void Start ()
@@ -146,6 +151,7 @@ namespace Completed
 			//Hit allows us to reference the result of the Linecast done in Move.
 			RaycastHit2D hit;
 
+
 			//If Move returns true, meaning Player was able to move into an empty space.
 			if (Move (xDir, yDir, out hit))
 			{
@@ -156,6 +162,25 @@ namespace Completed
 				if (box != null) {
 					box.AttemptMove<Wall>(xDir,yDir);
 				}
+				Water water = hit.transform.GetComponent<Water>();
+				if (water != null) {
+					/*Vector2 pos = transform.position;
+					Vector2 start = pos + new Vector2 (0.6f*xDir, 0.6f*yDir);
+					Vector2 end = pos + new Vector2 (xDir, yDir);
+					BoxCollider2D boxCollider = GetComponent <BoxCollider2D> ();
+					boxCollider.enabled = false;
+					RaycastHit2D hit2 = Physics2D.Linecast (start, end, blockingLayer);
+					boxCollider.enabled = true;
+					Water water2 = hit2.transform.GetComponent<Water>();
+*/
+					print("stuff");
+					print(walkOverWater);
+					print(this.walkOverWater);
+					if (this.walkOverWater) {
+						print("nice");
+						ForceMove<Water>(xDir, yDir);
+					}
+					}
 			}
 
 			//Since the player has moved and lost food points, check if the game has ended.
