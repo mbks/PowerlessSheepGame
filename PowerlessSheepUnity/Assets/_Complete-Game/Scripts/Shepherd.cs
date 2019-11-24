@@ -12,6 +12,8 @@ namespace Completed
 
         public GameObject laser;
 
+        public AudioClip scream;
+
         private int hp = 10;
         
         // Start is called before the first frame update
@@ -60,6 +62,7 @@ namespace Completed
         }
 
         private void Die() {
+            SoundManager.instance.PlaySingle(scream);
             GameManager.instance.Win();
             Destroy(this.gameObject);
         }
