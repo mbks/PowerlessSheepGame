@@ -162,6 +162,11 @@ namespace Completed
 		//Update is called every frame.
 		void Update()
 		{
+			if(Input.GetKeyDown(KeyCode.Escape)) {
+				levelImage.SetActive(true);
+				Credits();
+			}
+
 			//Check that playersTurn or enemiesMoving or doingSetup are not currently true.
 			if(playersTurn || enemiesMoving || doingSetup)
 
@@ -210,6 +215,7 @@ namespace Completed
 			Invoke("Quit", 10);
 			
 		}
+		
 
 		private void Quit() {
 			Application.Quit();
