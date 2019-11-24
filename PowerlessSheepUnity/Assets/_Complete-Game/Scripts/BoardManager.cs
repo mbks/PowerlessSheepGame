@@ -111,7 +111,7 @@ namespace Completed
 
 
 				case 2: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
-												{1,0,0,0,1,0,0,0,-1,1},
+												{1,0,0,0,7,0,0,0,-1,1},
 												{1,0,0,0,3,0,0,0,0,1},
 												{1,0,0,0,7,0,0,0,0,1},
 												{1,0,0,0,3,0,0,0,0,1},
@@ -146,6 +146,19 @@ namespace Completed
 							break;
 
 				case 5: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,6,1,0,0,0,1,-1,1},
+												{1,0,3,0,0,1,0,1,0,1},
+												{1,0,0,1,0,1,6,1,6,1},
+												{1,0,1,0,0,1,0,1,0,1},
+												{1,0,1,1,0,0,3,0,0,1},
+												{1,0,1,0,0,0,0,1,6,1},
+												{1,0,1,6,1,1,1,1,0,1},
+												{1,-2,1,0,0,6,0,6,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
+							break;
+
+
+				case 6: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
 												{1,0,0,0,0,0,0,0,-1,1},
 												{1,0,0,1,0,0,0,0,0,1},
 												{1,0,4,1,0,1,1,1,1,1},
@@ -157,7 +170,7 @@ namespace Completed
 												{1,1,1,1,1,1,1,1,1,1}};
 							break;
 
-				case 7: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+				case 7: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1}, //water1
 												{1,0,0,7,7,0,0,0,-1,1},
 												{1,1,1,1,7,7,0,0,0,1},
 												{1,7,7,0,0,7,7,7,7,1},
@@ -169,7 +182,7 @@ namespace Completed
 												{1,1,1,1,1,1,1,1,1,1}};
 							break;
 
-				case 8: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+				case 8: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1}, //water2
 												{1,0,0,0,0,7,0,0,-1,1},
 												{1,7,0,4,0,7,0,0,0,1},
 												{1,7,0,0,0,7,7,0,0,1},
@@ -181,7 +194,7 @@ namespace Completed
 												{1,1,1,1,1,1,1,1,1,1}};
 							break;
 
-				case 9: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+				case 9: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1}, //boss
 												{1,0,0,0,0,0,0,0,0,1},
 												{1,0,0,0,0,0,0,0,0,1},
 												{1,0,0,0,0,0,0,0,0,1},
@@ -348,6 +361,8 @@ namespace Completed
 		//SetupScene initializes our level and calls the previous functions to lay out the game board
 		public void SetupScene (int level)
 		{
+			
+			GameManager.instance.player = GameObject.Find("Player").GetComponent<Player>();
 			//Creates the outer walls and floor.
 			BoardSetup (level);
 

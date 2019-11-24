@@ -19,7 +19,7 @@ namespace Completed
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
-		private int level = 7;									//Current level number, expressed in game as "Day 1".
+		private int level = 1;									//Current level number, expressed in game as "Day 1".
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 		private bool enemiesMoving;								//Boolean to check if enemies are moving.
 		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
@@ -105,14 +105,18 @@ namespace Completed
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//introduction in walking over water
-				case 8: levelText.text = "Didn't you thought you were save? \n You must have been wrong there. \n You see 'The Shephard' now.\n You don't like him and you feel strong. "; 
+				case 8: levelText.text = "Wow! Do you really can walk over water now? Try it again!"; 
+						instance.player.hasLaser = true;
+						instance.player.walkOverWater = true; break;
+						//another walking over water
+				case 9: levelText.text = "Didn't you thought you were save? \n You must have been wrong there. \n You see 'The Shephard' now.\n You don't like him and you feel strong. "; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 				//Bossfight. Shoot at Shephard with your eyes
-				case 9: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
+				case 10: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
 						Win();
 						return;
-				default: levelText.text = "Day " + level; break;
+				default: levelText.text = "Level " + level; break;
 			}
 
 			//Set levelImage to active blocking player's view of the game board during setup.
@@ -171,7 +175,7 @@ namespace Completed
 		public void GameOver()
 		{
 			//Set levelText to display number of levels passed and game over message
-			levelText.text = "After " + level + " days, you died.";
+			levelText.text = "After " + level + " levels, you died.";
 
 			//Enable black background image gameObject.
 			levelImage.SetActive(true);
@@ -220,7 +224,6 @@ namespace Completed
 		}
 		public void restartLevel()
 		{
-			print("restart");
 			print(instance.level);
 			GameObject.Destroy(GameObject.Find("Board"));
 			instance.boardScript.SetupScene(instance.level);
@@ -228,7 +231,6 @@ namespace Completed
 
 		public void goBackLevel()
 		{
-			print("go back");
 			instance.level--;
 			GameObject.Destroy(GameObject.Find("Board"));
 			instance.boardScript.SetupScene(instance.level);
