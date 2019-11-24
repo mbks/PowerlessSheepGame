@@ -71,7 +71,7 @@ namespace Completed
 			{
 				vertical = 0;
 			}
-			//Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone
+            //Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone
 #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
 
 			//Check if Input has registered more than zero touches
@@ -113,8 +113,8 @@ namespace Completed
 			}
 
 #endif //End of mobile platform dependendent compilation section started above with #elif
-			//Check if we have a non-zero value for horizontal or vertical
-			if(horizontal != 0 || vertical != 0)
+            //Check if we have a non-zero value for horizontal or vertical
+            if (horizontal != 0 || vertical != 0)
 			{
 				//Call AttemptMove passing in the generic parameter Wall, since that is what Player may interact with if they encounter one (by attacking it)
 				//Pass in horizontal and vertical as parameters to specify the direction to move Player in.
@@ -166,19 +166,27 @@ namespace Completed
 				//Call RandomizeSfx of SoundManager to play the move sound, passing in two audio clips to choose from.
 				SoundManager.instance.RandomizeSfx (moveSound1, moveSound2);
 			} else {
-				Box box = hit.transform.GetComponent<Box>();
-				if (box != null) {
-					box.AttemptMove<Wall>(xDir,yDir);
-				}
-				Water water = hit.transform.GetComponent<Water>();
-				if (water != null) {
-					print(walkOverWater);
-					print(this.walkOverWater);
-					if (this.walkOverWater) {
-						ForceMove<Water>(xDir, yDir);
-						SoundManager.instance.PlaySingle (waterSound);
-					}
-					}
+                
+                if (hit.transform != null)
+                {
+                    Box box = hit.transform.GetComponent<Box>();
+				    if (box != null) {
+					    box.AttemptMove<Wall>(xDir,yDir);
+				    }
+				    Water water = hit.transform.GetComponent<Water>();
+				    if (water != null) {
+					    print(walkOverWater);
+					    print(this.walkOverWater);
+					    if (this.walkOverWater) {
+						    ForceMove<Water>(xDir, yDir);
+						    SoundManager.instance.PlaySingle (waterSound);
+					    }
+					    }
+                } else
+                {
+                    SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
+                }
+				
 			}
 
 			//Since the player has moved and lost food points, check if the game has ended.
@@ -195,6 +203,9 @@ namespace Completed
 
 			// Calculate end position based on the direction parameters passed in when calling Move.
 			Vector2 end = start + new Vector2 (xDir, yDir);
+
+            end = new Vector2(Mathf.Round(end.x), Mathf.Round(end.y));  // fixing floating point errors
+
 
 			StartCoroutine (SmoothMovement (end));
 		}

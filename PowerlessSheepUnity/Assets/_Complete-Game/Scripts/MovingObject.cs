@@ -14,6 +14,8 @@ namespace Completed
 		private Rigidbody2D rb2D;				//The Rigidbody2D component attached to this object.
 		private float inverseMoveTime;			//Used to make movement more efficient.
 
+        private bool isMoving = false;
+
 
 		//Protected, virtual functions can be overridden by inheriting classes.
 		protected virtual void Start ()
@@ -54,14 +56,14 @@ namespace Completed
 			boxCollider.enabled = true;
 
 			//Check if anything was hit
-			if(hit.transform == null)
+			if(hit.transform == null && !isMoving)
 			{
 				//If nothing was hit, start SmoothMovement co-routine passing in the Vector2 end as destination
 				StartCoroutine (SmoothMovement (end));
-			
 
-				//Return true to say that Move was successful
-				return true;
+
+                //Return true to say that Move was successful
+                return true;
 			}
 
 			//If something was hit, return false, Move was unsuccesful.
@@ -72,6 +74,7 @@ namespace Completed
 		//Co-routine for moving units from one space to next, takes a parameter end to specify where to move to.
 		protected IEnumerator SmoothMovement (Vector3 end)
 		{
+            isMoving = true;
 			//Calculate the remaining distance to move based on the square magnitude of the difference between current position and end parameter.
 			//Square magnitude is used instead of magnitude because it's computationally cheaper.
 			float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
@@ -91,6 +94,7 @@ namespace Completed
 				//Return and loop until sqrRemainingDistance is close enough to zero to end the function
 				yield return null;
 			}
+            isMoving = false;
 		}
 
 
