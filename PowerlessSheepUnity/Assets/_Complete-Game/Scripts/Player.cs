@@ -220,6 +220,7 @@ namespace Completed
 		public void Kill()
 		{
 			ALIVE = 0;
+			CheckIfGameOver();
 		}
 
 		//CheckIfGameOver checks if the player is out of food points and if so, ends the game.
