@@ -6,30 +6,36 @@ namespace Completed
 	//Enemy inherits from MovingObject, our base class for objects that can move, Player also inherits from this.
 	public class Laser : MovingObject
 	{
+		GameObject owner;
+		public void setOwner(GameObject gameObject) {
+			owner = gameObject;
+			gameObject.transform.position = owner.transform.position;
+		}
 
 
 		protected void Awake() {
-			gameObject.transform.position = GameManager.instance.player.gameObject.transform.position;
+			//gameObject.transform.position = GameManager.instance.player.gameObject.transform.position;
 			base.Start();
 		}
 
 
 		//Override the AttemptMove function of MovingObject to include functionality needed for Enemy to skip turns.
 		//See comments in MovingObject for more on how base AttemptMove function works.
-		public override void AttemptMove <T> (int dir, int ignore)
+		public override void AttemptMove <T> (int dir, int reach)
 		{
-		  gameObject.transform.position = GameManager.instance.player.gameObject.transform.position;
+		  //gameObject.transform.position = GameManager.instance.player.gameObject.transform.position;
+		  gameObject.transform.position = owner.transform.position;
 			//Call the AttemptMove function from MovingObject.
 			int xDir = 0;
 			int yDir = 0;
 			if (dir == 0)
-				xDir = 3;
+				xDir = reach;
 			if (dir == 2)
-				xDir = -3;
+				xDir = -reach;
 			if (dir == 3)
-				yDir = 3;
+				yDir = reach;
 			if (dir == 1)
-				yDir = -3;
+				yDir = -reach;
 
 
 			if (dir % 2 == 1)
@@ -46,23 +52,29 @@ namespace Completed
 
 			//Disable the boxCollider so that linecast doesn't hit this object's own collider.
 			gameObject.GetComponent<BoxCollider2D>().enabled = false;
-			GameManager.instance.player.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+			owner.gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
 			//Cast a line from start point to end point checking collision on blockingLayer.
 			RaycastHit2D[] hits = Physics2D.LinecastAll (start, end, blockingLayer);
 
 			//Re-enable boxCollider after linecast
 			gameObject.GetComponent<BoxCollider2D>().enabled = true;
-			GameManager.instance.player.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+			owner.gameObject.GetComponent<BoxCollider2D>().enabled = true;
 			foreach (RaycastHit2D hit in hits) {
 				if (hit.transform != null) 
 				{
-				Enemy hitEnemy = hit.transform.GetComponent<Enemy>();
-				if (hitEnemy != null)
-					hitEnemy.Kill();
-				Ice hitIce = hit.transform.GetComponent<Ice>();
-				if (hitIce != null)
-					hitIce.DamageWall(3);
+					Enemy hitEnemy = hit.transform.GetComponent<Enemy>();
+					if (hitEnemy != null)
+						hitEnemy.Kill();
+					Ice hitIce = hit.transform.GetComponent<Ice>();
+					if (hitIce != null)
+						hitIce.DamageWall(3);
+					Player hitPlayer = hit.transform.GetComponent<Player>();
+					if (hitPlayer != null)
+						hitPlayer.Kill();
+					Shepherd hitShepherd = hit.transform.GetComponent<Shepherd>();
+					if (hitShepherd != null)
+						hitShepherd.Hit();
 				}
 			}
 			
