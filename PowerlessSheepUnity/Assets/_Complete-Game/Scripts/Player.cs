@@ -24,7 +24,7 @@ namespace Completed
 
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int ALIVE = 1;
-		private bool hasLaser =  true;
+		public bool hasLaser =  true;
 		private int dir = 0;
 #if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
         private Vector2 touchOrigin = -Vector2.one;	//Used to store location of screen touch origin for mobile controls.
