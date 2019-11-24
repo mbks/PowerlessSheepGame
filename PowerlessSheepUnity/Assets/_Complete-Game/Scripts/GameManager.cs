@@ -201,8 +201,6 @@ namespace Completed
 		public void Win()
 		{
             levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
-			Invoke("HideLevelImage", 10);
-			levelImage.SetActive(true);
 			Invoke("Credits", 10);
 		}
 
