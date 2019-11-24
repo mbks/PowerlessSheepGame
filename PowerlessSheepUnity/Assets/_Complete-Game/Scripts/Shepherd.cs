@@ -11,6 +11,8 @@ namespace Completed
         private bool moveInstead = false;
 
         public GameObject laser;
+
+        private int hp = 10;
         
         // Start is called before the first frame update
 
@@ -47,6 +49,19 @@ namespace Completed
         }
 
         protected override void OnCantMove<T>(T component) {
+        }
+
+        public void Hit() {
+            hp -= 1;
+            print(hp);
+            if (hp <= 0) {
+                Die();
+            }
+        }
+
+        private void Die() {
+            GameManager.instance.Win();
+            Destroy(this.gameObject);
         }
     }
 }

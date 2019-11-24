@@ -74,7 +74,7 @@ namespace Completed
 						hitPlayer.Kill();
 					Shepherd hitShepherd = hit.transform.GetComponent<Shepherd>();
 					if (hitShepherd != null)
-						print("shepherd hit");
+						hitShepherd.Hit();
 				}
 			}
 			
