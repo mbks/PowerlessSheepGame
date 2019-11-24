@@ -19,7 +19,7 @@ namespace Completed
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
-		private int level = 1;									//Current level number, expressed in game as "Day 1".
+		private int level = 5;									//Current level number, expressed in game as "Day 1".
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 		private bool enemiesMoving;								//Boolean to check if enemies are moving.
 		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
@@ -95,21 +95,21 @@ namespace Completed
 				// second push level
 				case 4: levelText.text = "One more to go."; break;
 				//level with pushing stuff (complex pushing level) //some enemies to avoid
-				case 5: levelText.text = "You proved to be smart.\n Your eyes start to burn."; 
-						instance.player.hasLaser = true; break; 
+				case 5: levelText.text = "You proved to be smart.\n Your eyes start to burn.";
+						instance.player.hasLaser = true; break;
 						//melt ice-block
 				case 6: levelText.text = "Do you think you can shoot on other things too?";
 						instance.player.hasLaser = true; break;
 				//hard enemy-fighting-level
-				case 7: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much saver now, and somehow lightweighted..."; 
+				case 7: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much saver now, and somehow lightweighted...";
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//introduction in walking over water
-				case 8: levelText.text = "Wow! Do you really can walk over water now? Try it again!"; 
+				case 8: levelText.text = "Wow! Do you really can walk over water now? Try it again!";
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//another walking over water
-				case 9: levelText.text = "Didn't you thought you were save? \n You must have been wrong there. \n You see 'The Shephard' now.\n You don't like him and you feel strong. "; 
+				case 9: levelText.text = "Didn't you thought you were save? \n You must have been wrong there. \n You see 'The Shephard' now.\n You don't like him and you feel strong. ";
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 				//Bossfight. Shoot at Shephard with your eyes
