@@ -1,7 +1,7 @@
 # GameJam2019
 Topic: Powerless Sheep
 
-The powerless sheep.
+__The powerless sheep.__
 
 Written in a Game-Jam 2019 by:
 - Benjamin Bourgart
