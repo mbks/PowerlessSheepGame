@@ -30,10 +30,12 @@ namespace Completed
 		void Awake()
 		{
             //Check if instance already exists
-            if (instance == null)
-
-                //if not, set instance to this
+            if (instance == null) {
+				//if not, set instance to this
                 instance = this;
+			}
+
+                
 
             //If instance already exists and it's not this:
             else if (instance != this)
@@ -60,12 +62,14 @@ namespace Completed
         static public void CallbackInitialization()
         {
             //register the callback to be called everytime the scene is loaded
+			
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         //This is called each time a scene is loaded.
         static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
+			print("reload");
             instance.level++;
             instance.InitGame();
         }
