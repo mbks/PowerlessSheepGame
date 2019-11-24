@@ -49,18 +49,21 @@ namespace Completed
 			GameManager.instance.player.gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
 			//Cast a line from start point to end point checking collision on blockingLayer.
-			RaycastHit2D hit = Physics2D.Linecast (start, end, blockingLayer);
+			RaycastHit2D[] hits = Physics2D.LinecastAll (start, end, blockingLayer);
 
 			//Re-enable boxCollider after linecast
 			gameObject.GetComponent<BoxCollider2D>().enabled = true;
 			GameManager.instance.player.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-			if (hit.transform != null) {
+			foreach (RaycastHit2D hit in hits) {
+				if (hit.transform != null) 
+				{
 				Enemy hitEnemy = hit.transform.GetComponent<Enemy>();
 				if (hitEnemy != null)
 					hitEnemy.Kill();
 				Ice hitIce = hit.transform.GetComponent<Ice>();
 				if (hitIce != null)
 					hitIce.DamageWall(3);
+				}
 			}
 			
 		}

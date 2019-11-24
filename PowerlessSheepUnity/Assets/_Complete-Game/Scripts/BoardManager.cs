@@ -141,6 +141,18 @@ namespace Completed
 												{1,1,1,1,1,1,1,1,1,1}};
 							break;
 
+				case 5: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,0,0,0,0,0,0,-1,1},
+												{1,0,0,1,0,0,0,0,0,1},
+												{1,0,4,1,0,1,1,1,1,1},
+												{1,1,0,0,0,0,0,0,0,1},
+												{1,1,0,0,0,0,4,0,0,1},
+												{1,0,0,1,0,0,0,0,1,1},
+												{1,0,0,0,1,1,1,0,0,1},
+												{1,-2,0,0,0,0,0,0,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
+							break;
+
 				default: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
 								{1,2,0,0,1,0,0,0,0,1},
 								{1,0,1,0,1,0,1,0,0,1},
@@ -232,7 +244,7 @@ namespace Completed
 		}
 
 
-		
+
 		//RandomPosition returns a random position from our list gridPositions.
 		Vector3 RandomPosition ()
 		{
