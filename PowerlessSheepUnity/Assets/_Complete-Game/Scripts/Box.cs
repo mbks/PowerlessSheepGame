@@ -6,7 +6,7 @@ namespace Completed
 	//Enemy inherits from MovingObject, our base class for objects that can move, Player also inherits from this.
 	public class Box : MovingObject
 	{
-
+		public AudioClip moveSound1;
 
 		//Start overrides the virtual Start function of the base class.
 		protected override void Start ()
@@ -26,8 +26,10 @@ namespace Completed
 
 		protected override bool Move(int xDir, int yDir, out RaycastHit2D hit) {
 			bool moved = base.Move(xDir, yDir, out hit);
-			if (moved)
+			if (moved) {
 				GameManager.instance.player.ForceMove<Wall>(xDir, yDir);
+				SoundManager.instance.PlaySingle (moveSound1);
+			}
 			return moved;
 		}
 

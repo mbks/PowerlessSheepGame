@@ -99,27 +99,28 @@ namespace Completed
 				// second push level
 				case 4: levelText.text = "One more to go."; break;
 				//level with pushing stuff (complex pushing level) //some enemies to avoid
-				case 5: levelText.text = "You proved to be smart.\n Your eyes start to burn."; 
+
+				case 5: levelText.text = "You proved to be smart.\n Your eyes start to burn again."; 
 						instance.player.hasLaser = true; break; 
 						//melt ice-block
 				case 6: levelText.text = "Do you think you can shoot on other things too?";
 						instance.player.hasLaser = true; break;
-						//hard enemy-fighting-level
+						//medium enemy-fighting-level
 				case 7: levelText.text = "Do you dare to take on more enemies?";
 						instance.player.hasLaser = true; break;
 						//hard enemy-fighting-level
-				case 8: levelText.text = "Wow, thats a bunch of dead enemies!\n You feel much saver now, and somehow lightweighted..."; 
+				case 8: levelText.text = "Wow, that's a bunch of dead enemies!\n You feel much safer now, and somehow lightweighted..."; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//introduction in walking over water
-				case 9: levelText.text = "Wow! Do you really can walk over water now?\n Try it again!"; 
+				case 9: levelText.text = "Wow! Can you really walk over water now?\n Try it again!"; 
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
 						//another walking over water
-				case 10: levelText.text = "Didn't you thought you were save? \n You must have been wrong there. \n You see 'The Shephard' now.\n You don't like him and you feel strong. "; 
+				case 10: levelText.text = "Did you think you were save? \n You must have been wrong there. \n You see 'The Shepherd' now.\n Be up for a challenge. ";
 						instance.player.hasLaser = true;
 						instance.player.walkOverWater = true; break;
-				//Bossfight. Shoot at Shephard with your eyes
+						//Bossfight. Shoot at Shephard with your eyes
 				case 11: levelText.text = "Congratulations. \n You got all your superpowers back \n and got revenge on 'The Shephard'!\n But you are still a sheep...\nThe strange thing is: You dont care!\n Eating grass is great!";
 						Win();
 						return;

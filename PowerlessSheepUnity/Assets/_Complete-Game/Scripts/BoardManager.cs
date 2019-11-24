@@ -253,6 +253,9 @@ namespace Completed
                             case 4:
                                 exitDecoration = exitDecorations[1];
                                 break;
+							case 6:
+								exitDecoration = exitDecorations[2];
+								break;
                         }
 
 						GameObject toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)];

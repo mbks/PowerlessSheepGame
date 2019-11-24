@@ -17,6 +17,7 @@ namespace Completed
 		public AudioClip drinkSound1;				//1 of 2 Audio clips to play when player collects a soda object.
 		public AudioClip drinkSound2;				//2 of 2 Audio clips to play when player collects a soda object.
 		public AudioClip gameOverSound;				//Audio clip to play when player dies.
+		public AudioClip waterSound;
 
 		public AudioClip screamSound;
 
@@ -175,6 +176,7 @@ namespace Completed
 					print(this.walkOverWater);
 					if (this.walkOverWater) {
 						ForceMove<Water>(xDir, yDir);
+						SoundManager.instance.PlaySingle (waterSound);
 					}
 					}
 			}
