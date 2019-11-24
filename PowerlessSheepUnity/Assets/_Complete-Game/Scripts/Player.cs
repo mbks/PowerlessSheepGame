@@ -33,7 +33,7 @@ namespace Completed
 
 		void Awake() {
 			walkOverWater = false;
-			hasLaser = true;
+			hasLaser = false;
 		}
 
 		//Start overrides the Start function of MovingObject
@@ -165,20 +165,9 @@ namespace Completed
 				}
 				Water water = hit.transform.GetComponent<Water>();
 				if (water != null) {
-					/*Vector2 pos = transform.position;
-					Vector2 start = pos + new Vector2 (0.6f*xDir, 0.6f*yDir);
-					Vector2 end = pos + new Vector2 (xDir, yDir);
-					BoxCollider2D boxCollider = GetComponent <BoxCollider2D> ();
-					boxCollider.enabled = false;
-					RaycastHit2D hit2 = Physics2D.Linecast (start, end, blockingLayer);
-					boxCollider.enabled = true;
-					Water water2 = hit2.transform.GetComponent<Water>();
-*/
-					print("stuff");
 					print(walkOverWater);
 					print(this.walkOverWater);
 					if (this.walkOverWater) {
-						print("nice");
 						ForceMove<Water>(xDir, yDir);
 					}
 					}
