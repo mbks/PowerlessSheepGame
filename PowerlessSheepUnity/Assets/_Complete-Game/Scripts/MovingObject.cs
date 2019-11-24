@@ -100,7 +100,6 @@ namespace Completed
 			//Set canMove to true if Move was successful, false if failed.
 			bool canMove = Move (xDir, yDir, out hit);
 
-
 			//Check if nothing was hit by linecast
 			if(hit.transform == null)
 				//If nothing was hit, return and don't execute further code.

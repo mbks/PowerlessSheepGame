@@ -41,6 +41,8 @@ namespace Completed
 		public GameObject unmovableBox;
 		public GameObject ice;
 		public GameObject water;
+
+		public GameObject shepherd;
 		private Transform boardHolder;									//A variable to store a reference to the transform of our Board object.
 		private List <Vector3> gridPositions = new List <Vector3> ();	//A list of possible locations to place tiles.
 
@@ -95,6 +97,7 @@ namespace Completed
 			5 = notMovableBox
 			6 = ice
 			7 = water
+			42 = shepherd
 			**/
 			switch ( level)
 			{
@@ -153,6 +156,18 @@ namespace Completed
 												{1,1,1,1,1,1,1,1,1,1}};
 							break;
 
+				case 6: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
+												{1,0,0,0,0,0,0,0,0,1},
+												{1,0,0,0,0,0,0,0,0,1},
+												{1,0,0,0,0,0,0,0,0,1},
+												{1,0,0,0,0,0,0,0,42,1},
+												{1,0,0,0,0,0,0,0,0,1},
+												{1,0,0,0,0,0,0,0,0,1},
+												{1,0,0,0,0,0,0,0,0,1},
+												{1,0,0,0,0,0,0,0,0,1},
+												{1,1,1,1,1,1,1,1,1,1}};
+							break;
+
 				default: boardArray = new int[,]{{1,1,1,1,1,1,1,1,1,1},
 								{1,2,0,0,1,0,0,0,0,1},
 								{1,0,1,0,1,0,1,0,0,1},
@@ -201,6 +216,7 @@ namespace Completed
 						case 5: toInstantiate = unmovableBox; break;
 						case 6: toInstantiate = ice; break;
 						case 7: toInstantiate = water; break;
+						case 42: toInstantiate = shepherd; break;
 						default: toInstantiate = floorTiles[Random.Range (0,floorTiles.Length)]; break;
 						}
 						instance = Instantiate (toInstantiate, new Vector3 (j, i, 0f), Quaternion.identity) as GameObject;

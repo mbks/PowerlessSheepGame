@@ -126,7 +126,8 @@ namespace Completed
 				{
 					if (instanceLaser == null) {
 						instanceLaser = Instantiate (Laser, new Vector3 (0f, 0f, 0f), Quaternion.identity);
-						instanceLaser.GetComponent<Laser>().AttemptMove<Enemy>(dir, 0);
+						instanceLaser.GetComponent<Laser>().setOwner(this.gameObject);
+						instanceLaser.GetComponent<Laser>().AttemptMove<Enemy>(dir, 3);
 						Destroy(instanceLaser, 0.3f);
 					}
 				}
@@ -220,13 +221,14 @@ namespace Completed
 		public void Kill()
 		{
 			ALIVE = 0;
-			CheckIfGameOver();
+			StartCoroutine(CheckIfGameOver());
 		}
 
 		//CheckIfGameOver checks if the player is out of food points and if so, ends the game.
-		private void CheckIfGameOver ()
+		private IEnumerator CheckIfGameOver ()
 		{
 			//Check if food point total is less than or equal to zero.
+			yield return new WaitForSeconds(0.5f);
 			if (ALIVE == 0) // FIND BETTER GameOver CRITERION
 			{
 				//Call the PlaySingle function of SoundManager and pass it the gameOverSound as the audio clip to play.
@@ -238,6 +240,7 @@ namespace Completed
 				//Call the GameOver function of GameManager.
 				GameManager.instance.GameOver ();
 			}
+			yield return null;
 		}
 	}
 }
